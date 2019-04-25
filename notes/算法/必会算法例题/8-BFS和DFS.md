@@ -54,3 +54,56 @@ public void backtrack(List<List<Integer>> ans, TreeNode curNode, int level){
     backtrack(ans, curNode.right, level + 1);
 }
 ```
+
+## 2. 二叉树的最大深度
+
+[Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+
+```java
+public int maxDepth(TreeNode root) {
+    if(root == null) return 0;
+    return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+}
+```
+
+## 3. 二叉树的最小深度
+
+[Leetcode - 111 Minimum Depth of Binary Tree (Easy)](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+
+```java
+public int minDepth(TreeNode root) {
+    if(root == null) return 0;
+    int left = minDepth(root.left);
+    int right = minDepth(root.right);
+    return (left == 0 || right == 0) ? left + right + 1: Math.mi(left,right) + 1;
+}
+```
+
+## 4. 生成括号
+
+[Leetcode - 22 Generate Parentheses (Medium)](https://leetcode.com/problems/generate-parentheses/)
+
+题目描述：给定整数 n，生成包含 n 个括号合法字符串的所有组合。
+
+```java
+public List<String> generateParenthesis(int n) {
+    List<String> res = new ArrayList<String>();
+    helper(res, "", 0, 0, n);
+    return res;
+}
+
+public void helper(List<String> res, String curString, int openCount, int closeCount, int max){
+    if(curString.length() == 2 * max){
+        res.add(curString);
+        return;
+    }
+    
+    if(openCount < max){
+        helper(res, curString + '(', openCount + 1, closeCount, max);
+    }
+    
+    if(closeCount < openCount){
+        helper(res, curString + ')', openCount, closeCount + 1, max);
+    }
+}
+```
