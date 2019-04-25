@@ -1,4 +1,5 @@
 package com.str818.adapter;
 
-public class DC5 {
+public interface DC5 {
+    int outputDC5V();
 }
