@@ -1,4 +1,5 @@
 package com.str818.iterator;
 
-public class Aggregate {
+public interface Aggregate {
+    Iterator createIterator();
 }
