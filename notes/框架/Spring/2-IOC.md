@@ -42,19 +42,134 @@ public class Client {
 }
 ```
 
-## 二、IoC 容器
+# 二、什么是 IOC
 
-## 1. 什么是 IoC？
+IOC：控制反转，控制权的转移，应用程序本身不负责依赖对象的创建和维护，而是由外部容器负责创建和维护。也就是说获得依赖对象的过程被反转了。
 
-控制反转，控制权的转移，应用程序本身不负责依赖对象的创建和维护，而是由外部容器负责创建和维护。也就是说获得依赖对象的过程被反转了。
-
-**DI（依赖注入）** 是 IoC 的一种实现方式。
+**DI（依赖注入）** 是 IOC 的一种实现方式。
 
 <div align="center">  <img src="img/IoC.png" width="60%"/> </div><br>
 
-## 2. Bean 的配置
+# 三、Spring 的 Bean 配置
 
-Spring 中所有的对象都称为 Bean。
+`spring-ioc.xml` 配置文件。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="test" class="com.str818.bean.Test"></bean>
+</beans>
+```
+
+待装配的 Bean。
+
+```java
+package com.str818.bean;
+public class Test {
+    public void print(){
+        System.out.println("test success!");
+    }
+}
+```
+
+测试类。
+
+```java
+public class Client {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-ioc.xml");
+        Test test = (Test) context.getBean("test");
+        test.print();
+    }
+}
+```
+
+# 三、Bean 容器的初始化
+
+## 1. 基础
+
+- org.springframework.beans
+- org.springframework.context
+- BeanFactory 提供配置结构和基本功能，加载并初始化 Bean。
+- ApplicationContext 保存了 Bean 对象并在 Spring 中被广泛使用。
+
+## 2. 方式
+
+### I. 本地文件
+
+```
+FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("F:/workspace/appcontext.xml");
+```
+
+### II. Classpath
+
+```
+ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-context.xml);
+```
+
+### III. Web 应用
+
+```
+<listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+<servlet>
+    <servlet-name>context</servlet-name>
+    <servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet.class>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+```
+
+# 四、Spring 注入
+
+Spring 注入是指在启动 Spring 容器加载 bean 配置的时候，完成对变量的赋值行为。
+
+## 1. Setter 注入
+
+```java
+public class TestA {
+    private TestB myTestB;
+    public void setMyTestB(TestB myTestB) {
+        this.myTestB = myTestB;
+    }
+}
+```
+
+xml 配置文件。
+
+```
+<bean id="testA" class="TestA">
+    <property name="myTestB">
+        <ref bean="testB" />
+    </property>
+</bean>
+<bean id="testB" class="TestB"></bean>
+```
+
+## 2. 构造注入
+
+```java
+public class TestA {
+    private TestB myTestB;
+    public TestA(TestB myTestB) {
+        this.myTestB = myTestB;
+    }
+}
+```
+
+xml 配置文件。
+
+```
+<bean id="testA" class="TestA">
+    <constructor-arg>
+        <bean class="TestB" />
+    </constructor-arg>
+</bean>
+```
 
 
 
