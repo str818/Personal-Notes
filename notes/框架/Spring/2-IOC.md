@@ -101,19 +101,19 @@ public class Client {
 
 ### I. 本地文件
 
-```
+```java
 FileSystemXmlApplicationContext context = new FileSystemXmlApplicationContext("F:/workspace/appcontext.xml");
 ```
 
 ### II. Classpath
 
-```
+```java
 ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring-context.xml);
 ```
 
 ### III. Web 应用
 
-```
+```xml
 <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
@@ -141,7 +141,7 @@ public class TestA {
 
 xml 配置文件。
 
-```
+```xml
 <bean id="testA" class="TestA">
     <property name="myTestB">
         <ref bean="testB" />
@@ -163,7 +163,7 @@ public class TestA {
 
 xml 配置文件。
 
-```
+```xml
 <bean id="testA" class="TestA">
     <constructor-arg>
         <bean class="TestB" />
