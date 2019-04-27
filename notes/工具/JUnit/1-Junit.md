@@ -51,8 +51,8 @@ public class CalculateTest {
 # 三、常用注解
 
 1. `@Test`：测试方法
-  - (expected = XX.class) 如果程序抛出 XX 异常，则测试通过
-  - (timeout = 100) 如果程序在 100 毫秒内完成，则测试通过，防止死循环
+   - (expected = XX.class) 如果程序抛出 XX 异常，则测试通过
+   - (timeout = 100) 如果程序在 100 毫秒内完成，则测试通过，防止死循环
 2. `@Ignore`：被忽略的测试方法，暂时不运行此段代码
 3. `@Before`：每个测试方法执行前运行
 4. `@After`：每个测试方法执行后运行
