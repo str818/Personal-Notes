@@ -135,3 +135,41 @@ Resource resource = new ClassPathResource("test.txt");
 System.out.println(resource.contentLength());
 System.out.println(resource.lastModified());
 ```
+
+## 七、注解
+
+### @Component
+
+通用注解，可用于任何 bean。
+
+### @Repository
+
+通常用于注解 DAO 类，即持久层。
+
+### @Service
+
+通常用于注解 Service 类，即服务层。
+
+### @Controller
+
+通常用于 Controller 类，即控制层(MVC)。
+
+### @Autowired
+
+自动装配，默认按类型匹配的方式，在容器中查找匹配的 Bean，当有且仅有一个匹配的 Bean 时，Spring 将其注入 @Autowired 标注的变量中。
+
+### @Qualifier
+
+如果容器中有多个匹配的 Bean，可以通过 @Qualifier 注解限定 Bean 的名称。
+
+### @Resource
+
+与 @Autowired 注解的作用类似，但 @Autowired 默认按照 byType 方式进行匹配，而 @Resource 默认感召 byName 方式进行匹配。
+
+@Autowired 是 Spring 的注解；@Resource 是 J2EE 的注解。
+
+### @Configuration 和 @Bean
+
+@Configuration 把一个类作为一个 IoC 容器，它的某个方法头上如果注册了 @Bean，就会作为这个 Spring 容器中的 Bean。
+
+
