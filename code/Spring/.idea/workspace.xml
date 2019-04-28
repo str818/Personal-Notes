@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2209f2f7-8ad7-404c-b1ca-ecb315a3e453" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Junit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Junit/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../notes/框架/Spring/3-Bean.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../notes/框架/Spring/3-Bean.md" afterDir="false" />
-    </list>
+    <list default="true" id="2209f2f7-8ad7-404c-b1ca-ecb315a3e453" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +13,7 @@
     <session id="294452518">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -68,8 +66,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/spring-ioc.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="5" column="68" lean-forward="true" selection-start-line="5" selection-start-column="68" selection-end-line="5" selection-end-column="68" />
+            <state relative-caret-position="100">
+              <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -144,9 +142,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="8" />
-    <option name="y" value="508" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="303" />
+    <option name="y" value="188" />
     <option name="width" value="1440" />
     <option name="height" value="780" />
   </component>
@@ -184,7 +182,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556372996045" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556373008822" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
@@ -294,7 +292,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1556354620218</updated>
-      <workItem from="1556354627557" duration="8547000" />
+      <workItem from="1556354627557" duration="9188000" />
     </task>
     <servers />
   </component>
@@ -331,11 +329,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8547000" />
+    <option name="totallyTimeSpent" value="9188000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="207" y="609" width="1440" height="780" extended-state="0" />
-    <editor active="true" />
+    <frame x="303" y="188" width="1440" height="780" extended-state="0" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Image Layers" />
@@ -353,7 +350,7 @@
       <window_info anchor="bottom" id="Messages" weight="0.32998884" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.568438" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.568438" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39910814" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -486,8 +483,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/spring-ioc.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="68" lean-forward="true" selection-start-line="5" selection-start-column="68" selection-end-line="5" selection-end-column="68" />
+        <state relative-caret-position="100">
+          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
         </state>
       </provider>
     </entry>
