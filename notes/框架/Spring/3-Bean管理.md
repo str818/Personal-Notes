@@ -1,17 +1,95 @@
 
 
+# 一、Spring 工厂类
+
+加载配置文件后，会自动创建所有的对象。
+
+<div align="center">  <img src="img/applicationContext.png" width="100%"/> </div><br>
+
+# 二、Bean 的管理
+
+## 1. XML 方法
+
+### 实例化的三种方式
+
+### I. 无参数构造器
+
+```java
+public class Bean1 {
+    public Bean1() {
+        System.out.println("Bean1 被实例化了...");
+    }
+}
+```
+
+配置文件。
+```xml
+<bean id="bean1" class="com.str818.ioc.demo2.Bean1"></bean>
+```
+
+测试方法。
+```java
+@Test
+public void demo1() {
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+    Bean1 bean1 = (Bean1)applicationContext.getBean("bean1");
+}
+```
+
+输出。
+```
+Bean1 被实例化了...
+```
+
+### II. 静态工厂
+
+```java
+public class Bean2 {}
+```
+
+工厂类。
+```java
+public class Bean2Factory {
+    public static Bean2 createBean2() {
+        System.out.println("Bean2Factory的方法已经执行了...");
+        return new Bean2();
+    }
+}
+```
+
+配置文件。
+```xml
+<bean id="bean2" class="com.str818.ioc.demo2.Bean2Factory" factory-method="createBean2"></bean>
+```
+
+测试方法。
+```java
+@Test
+public void demo2() {
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+    Bean2 bean2 = (Bean2)applicationContext.getBean("bean2");
+}
+```
+
+输出。
+```
+Bean2Factory的方法已经执行了...
+```
+
+
+
 # 一、Bean 的配置项
 
 Spring 中所有的对象都称为 Bean。
 
-- Id：IOC 容器中 Bean 的唯一标识
-- Class：具体要实例化的类 
-- Scope：作用域
-- Constructor arguments：构造器参数
-- Properties：属性
-- Autowiring mode：自动装配模式
+- id：IOC 容器中 Bean 的唯一标识，name 中可以包含特殊字符，效果与 id 相同
+- class：用于设置一个类的完全路径
+- scope：作用域
+- constructor arguments：构造器参数
+- properties：属性
+- autowiring mode：自动装配模式
 - lazy-initialization mode：懒加载模式
-- Initializaton/destruction mothod：初始化和销毁方法
+- initializaton/destruction mothod：初始化和销毁方法
 
 # 二、Bean 的作用域
 

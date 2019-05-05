@@ -42,13 +42,118 @@ public class Client {
 }
 ```
 
-# 二、什么是 IOC
+# 二、控制反转 - IOC
 
-IOC：控制反转，控制权的转移，应用程序本身不负责依赖对象的创建和维护，而是由外部容器负责创建和维护。也就是说获得依赖对象的过程被反转了。
+IOC：控制反转（Inverse of Control），控制权的转移，应用程序本身不负责依赖对象的创建和维护，而是由外部容器负责创建和维护。也就是说获得依赖对象的过程被反转了。简单说，就是创建对象的控制权被反转到了 Spring 框架。
 
-**DI（依赖注入）** 是 IOC 的一种实现方式。
+## 1. 传统写法
+
+传统的写法直接创建对象使用，应用程序本身负责对象的创建与维护，对象的创建都写在业务代码中，耦合度很高。
+
+定义接口：
+```java
+public interface UserService {
+    public void sayHello();
+}
+```
+
+实现类：
+```java
+public class UserServiceImpl implements UserService{
+    public void sayHello() {
+        System.out.println("Hello");
+    }
+}
+```
+
+测试代码：
+```java
+@Test
+public void demo1() {
+    UserService userService = new UserServiceImpl();
+    userService.sayHello();
+}
+```
+
+## 2. IOC 写法
+
+控制反转是将对象的创建与维护交给外部的容器，通过配置文件与工厂模式创建对象，将对象的创建从逻辑代码中剥离，实现松耦合。
+
+定义配置文件：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userService" class="com.str818.ioc.UserServiceImpl"></bean>
+
+</beans>
+```
+
+测试代码：
+```java
+@Test
+public void demo2() {
+    // 创建 Spring 的工厂
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+    // 加载实现类
+    UserService userService = (UserService) applicationContext.getBean("userService");
+    // 调用方法
+    userService.sayHello();
+}
+```
+
+# 三、依赖注入
+
+DI：依赖注入（Dependency Injection）是 IOC 的一种实现方式，在 Spring 创建这个对象的过程中，将这个对象所依赖的属性注入进去。
 
 <div align="center">  <img src="img/IoC.png" width="60%"/> </div><br>
+
+## 1. 传统写法
+
+接着上面的例子，如果要给 UserServiceImpl 对象添加属性，在创建对象之后需要在代码中对属性进行初始化。
+
+UserServiceImpl 类。
+```java
+public class UserServiceImpl implements UserService{
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void sayHello() {
+        System.out.println("Hello " + name);
+    }
+}
+```
+
+测试类，由于接口没有 name 的属性，所以不能使用接口引用对象了。
+```java
+@Test
+public void demo1() {
+    // UserService userService = new UserServiceImpl();
+    UserServiceImpl userService = new UserServiceImpl();
+    userService.setName("张三");
+    userService.sayHello();
+}
+```
+
+## 2. 依赖注入
+
+依赖注入方法只需要对配置文件更改，不需要修改源代码。
+```xml
+<bean id="userService" class="com.str818.ioc.UserServiceImpl">
+    <property name="name" value="李四"></property>
+</bean>
+```
+
 
 # 三、Spring 的 Bean 配置
 
