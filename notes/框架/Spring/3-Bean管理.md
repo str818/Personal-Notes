@@ -137,6 +137,20 @@ Spring 中所有的对象都称为 Bean。
 <bean id="test" class="com.str818.bean.test" scope="singleton"></bean>
 ```
 
+## 3. 全局配置
+
+在配置文件中设置可选的默认初始化与销毁方法。
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-init-method="init" default-destroy-method="destroy">
+</beans>
+```
+
+
 # 四、Bean 的生命周期
 
 ## 1. 全部生命周期
@@ -649,30 +663,7 @@ public class CollectionBean {
 </bean>
 ```
 
-
-
-
-## 3. 全局配置
-
-在配置文件中设置可选的默认初始化与销毁方法。
-
-```xml
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd"
-       default-init-method="init" default-destroy-method="destroy">
-</beans>
-```
-
-# 四、Aware
-
-Spring 中提供了一些以 Aware 结尾的接口，实现了 Aware 接口的 bean 在被初始化之后，可以获取相应资源。
-
-- ApplicationContextAware：能够获取上下文 context。
-- BeanNameAware：获取 Bean 的 name。
-
-# 五、Bean 的自动装配
+## 6. 自动装配
 
 Spring 容器可以在不使用 `<constructor-arg>` 和 `<property>` 元素的情况下自动装配相互协作的 bean 之间的关系。只需要在 `<bean>` 中定义 autowire 属性。
 
@@ -688,7 +679,147 @@ Spring 容器可以在不使用 `<constructor-arg>` 和 `<property>` 元素的�
 - constructor：与 byType 方式类似，不同之处在于它应用于构造器参数。
 - autodetect：如果找到默认的构造函数，使用 constructor; 否则，使用 byType。
 
-# 六、Resource
+# 六、注解方式管理Bean
+
+## 1. 注解管理
+
+@Component 描述 Spring 框架中的 Bean，除了 @Component 外，Spring 提供 3 个功能基本和 @Component 等效的注解：
+
+- @Repository 用于对 DAO 实现进行标注
+- @Service 用于对 Service 实现类进行标注
+- @Controller 用于对 Controller 实现类进行标注
+
+```java
+@Repository("userDao")
+public class UserDao {
+    public void save(){
+        System.out.println("DAO中保存用户...");
+    }
+}
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解扫描=======================-->
+    <context:component-scan base-package="com.str818"/>
+</beans>
+```
+
+## 2. 属性注入
+
+### I. value
+
+对于普通的属性，使用 Value 即可注入，不需要 Set 与 Get 方法。
+
+```java
+@Service("userService")
+public class UserService {
+    @Value("米饭")
+    private String something;
+}
+```
+
+### II. 按类型注入
+
+@Autowired 会根据类型自动注入。
+
+```java
+@Repository("userDao")
+public class UserDao {
+    public void save(){
+        System.out.println("DAO中保存用户...");
+    }
+}
+```
+
+```java
+@Service("userService")
+public class UserService {
+    @Autowired
+    private UserDao userDao;
+
+    public void save(){
+        System.out.println("Service中保存用户...");
+        userDao.save();
+    }
+}
+```
+
+## III. 按名称注入
+
+一起使用 @Autowired 和 @Qualifier("name") 能够按照名称进行注入，与单独使用 @Resource(name="name") 效果相同。
+
+```java
+@Repository("userDao")
+public class UserDao {
+    public void save(){
+        System.out.println("DAO中保存用户...");
+    }
+}
+```
+
+```java
+@Service("userService")
+public class UserService {
+    @Autowired
+    @Qualifier("userDao")
+    // @Resource(name="userDao")
+    private UserDao userDao;
+
+    public void save(){
+        System.out.println("Service中保存用户...");
+        userDao.save();
+    }
+}
+```
+
+## 4. 其他注解
+
+### I. @PostConstruct 和 @PreDestroy
+
+这两个注解的作用相当于 `<bean id="xxx" class="..." init-method="init" destroy-method="destroy" />` 中的 init-method 与 destroy-method 设置的两个方法。
+
+```java
+@Component("bean")
+public class Bean {
+
+    @PostConstruct
+    public void init(){
+        System.out.println("initBean...");
+    }
+
+    public void say(){
+        System.out.println("say...");
+    }
+
+    @PreDestroy
+    public void destory(){
+        System.out.println("destoryBean...");
+    }
+}
+```
+
+### II. @Scope
+
+```java
+@Component("bean")
+@Scope("prototype")
+public class Bean {
+
+}
+```
+
+# 七、注解与XML配置方式的混合使用
+
+在配置文件中添加 `<context:annotation-config/>` 对注解进行扫描。
+
+# 八、Resource
 
 在使用 Spring 作为容器进行项目开发中会有很多的配置文件，这些文件都是通过 Spring 的 Resource 接口来实现加载的。
 
@@ -704,41 +835,5 @@ Resource resource = new ClassPathResource("test.txt");
 System.out.println(resource.contentLength());
 System.out.println(resource.lastModified());
 ```
-
-## 七、注解
-
-### @Component
-
-通用注解，可用于任何 bean。
-
-### @Repository
-
-通常用于注解 DAO 类，即持久层。
-
-### @Service
-
-通常用于注解 Service 类，即服务层。
-
-### @Controller
-
-通常用于 Controller 类，即控制层(MVC)。
-
-### @Autowired
-
-自动装配，默认按类型匹配的方式，在容器中查找匹配的 Bean，当有且仅有一个匹配的 Bean 时，Spring 将其注入 @Autowired 标注的变量中。
-
-### @Qualifier
-
-如果容器中有多个匹配的 Bean，可以通过 @Qualifier 注解限定 Bean 的名称。
-
-### @Resource
-
-与 @Autowired 注解的作用类似，但 @Autowired 默认按照 byType 方式进行匹配，而 @Resource 默认感召 byName 方式进行匹配。
-
-@Autowired 是 Spring 的注解；@Resource 是 J2EE 的注解。
-
-### @Configuration 和 @Bean
-
-@Configuration 把一个类作为一个 IoC 容器，它的某个方法头上如果注册了 @Bean，就会作为这个 Spring 容器中的 Bean。
 
 

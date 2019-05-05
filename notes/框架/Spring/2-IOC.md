@@ -229,52 +229,5 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("cla
 </servlet>
 ```
 
-# 四、Spring 注入
-
-Spring 注入是指在启动 Spring 容器加载 bean 配置的时候，完成对变量的赋值行为。
-
-## 1. Setter 注入
-
-```java
-public class TestA {
-    private TestB myTestB;
-    public void setMyTestB(TestB myTestB) {
-        this.myTestB = myTestB;
-    }
-}
-```
-
-xml 配置文件。
-
-```xml
-<bean id="testA" class="TestA">
-    <property name="myTestB">
-        <ref bean="testB" />
-    </property>
-</bean>
-<bean id="testB" class="TestB"></bean>
-```
-
-## 2. 构造注入
-
-```java
-public class TestA {
-    private TestB myTestB;
-    public TestA(TestB myTestB) {
-        this.myTestB = myTestB;
-    }
-}
-```
-
-xml 配置文件。
-
-```xml
-<bean id="testA" class="TestA">
-    <constructor-arg>
-        <bean class="TestB" />
-    </constructor-arg>
-</bean>
-```
-
 
 
