@@ -6,11 +6,9 @@
 
 <div align="center">  <img src="img/applicationContext.png" width="100%"/> </div><br>
 
-# 二、实例化方式
+# 二、XML 实例化方式
 
-## 1. XML 实例化的三种方式
-
-### I. 无参数构造器
+## 1. 无参数构造器
 
 ```java
 public class Bean1 {
@@ -39,7 +37,7 @@ public void demo1() {
 Bean1 被实例化了...
 ```
 
-### II. 静态工厂
+## 2. 静态工厂
 
 ```java
 public class Bean2 {}
@@ -74,7 +72,7 @@ public void demo2() {
 Bean2Factory的方法已经执行了...
 ```
 
-### III. 实例工厂
+## 3. 实例工厂
 
 ```java
 public class Bean3 {}
@@ -165,7 +163,7 @@ Spring 中所有的对象都称为 Bean。
 8. 如果存在类实现 BeanPostProcessor (处理 Bean)，执行 postProcessAfterInitialization()
 9. 执行业务处理
 10. 如果 Bean 实现 DisposableBean 执行 destroy()
-11. 调用 `<bean destroy-method="customerDestroy`> 执行销毁方法 customerDestroy()
+11. 调用 `<bean destroy-method="customerDestroy>` 执行销毁方法 customerDestroy()
 
 ```java
 public class Man implements BeanNameAware,ApplicationContextAware,InitializingBean,DisposableBean{
@@ -751,7 +749,7 @@ public class UserService {
 }
 ```
 
-## III. 按名称注入
+### III. 按名称注入
 
 一起使用 @Autowired 和 @Qualifier("name") 能够按照名称进行注入，与单独使用 @Resource(name="name") 效果相同。
 
