@@ -4,7 +4,7 @@
 
 加载配置文件后，会自动创建所有的对象。
 
-<div align="center">  <img src="img/applicationContext.png" width="100%"/> </div><br>
+<div align="center">  <img src="img/applicationContext.png" width="70%"/> </div><br>
 
 # 二、XML 实例化方式
 
