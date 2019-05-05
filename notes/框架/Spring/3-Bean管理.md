@@ -6,11 +6,9 @@
 
 <div align="center">  <img src="img/applicationContext.png" width="100%"/> </div><br>
 
-# 二、Bean 的管理
+# 二、实例化方式
 
-## 1. XML 方法
-
-### 实例化的三种方式
+## 1. XML 实例化的三种方式
 
 ### I. 无参数构造器
 
@@ -76,9 +74,45 @@ public void demo2() {
 Bean2Factory的方法已经执行了...
 ```
 
+### III. 实例工厂
 
+```java
+public class Bean3 {}
+```
 
-# 一、Bean 的配置项
+实例工厂。
+```java
+public class Bean3Factory {
+    public Bean3 createBean3 () {
+        System.out.println("Bean3Factory的方法已经执行了..");
+        return new Bean3();
+    }
+}
+```
+
+配置文件。
+```xml
+<bean id="bean3Factory" class="com.str818.ioc.demo2.Bean3Factory"></bean>
+<bean id="bean3" factory-bean="bean3Factory" factory-method="createBean3"></bean>
+```
+
+测试方法。
+```java
+@Test
+public void demo3() {
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+    Bean3 bean3 = (Bean3)applicationContext.getBean("bean3");
+}
+```
+
+输出。
+```
+Bean3Factory的方法已经执行了...
+```
+
+# 三、Bean 的配置项与作用域
+
+## 1. 配置项
 
 Spring 中所有的对象都称为 Bean。
 
@@ -91,7 +125,7 @@ Spring 中所有的对象都称为 Bean。
 - lazy-initialization mode：懒加载模式
 - initializaton/destruction mothod：初始化和销毁方法
 
-# 二、Bean 的作用域
+## 2. 作用域
 
 - singleton：单例，默认方式，指一个 Bean 容器中只存在一份。
 - prototype：每次请求（每次使用）创建新的实例，destroy 方式不生效。
@@ -103,63 +137,520 @@ Spring 中所有的对象都称为 Bean。
 <bean id="test" class="com.str818.bean.test" scope="singleton"></bean>
 ```
 
-# 三、Bean 的声明周期
+# 四、Bean 的生命周期
 
-定义 -> 初始化 -> 使用 -> 销毁
+## 1. 全部生命周期
 
-## 1. 初始化
-
-I. 配置 init-method。
-
-```xml
-<bean id="exampleInitBean" class="examples.ExampleBean" init-method-"init" />
-```
+1. instantiate bean 对象实例化
+2. populate prpperties 封装属性
+3. 如果 Bean 实现 BeanNameAware 执行 setBeanName()
+4. 如果 Bean 实现 BeanFactoryAware 或者 ApplicationContextAware 设置工厂 setBeanFactory() 或者上下文对象 setApplicationContext()
+5. 如果存在类实现 BeanPostProcessor (后处理 Bean)，执行 postProcessBeforeInitialization()
+6. 如果 Bean 实现 InitializingBean 执行 afterPropertiesSet()
+7. 调用 `<bean init-method="init>` 执行初始化方法 init()
+8. 如果存在类实现 BeanPostProcessor (处理 Bean)，执行 postProcessAfterInitialization()
+9. 执行业务处理
+10. 如果 Bean 实现 DisposableBean 执行 destroy()
+11. 调用 `<bean destroy-method="customerDestroy`> 执行销毁方法 customerDestroy()
 
 ```java
-public class ExampleBean {
-    public void init() {
-        // do something
+public class Man implements BeanNameAware,ApplicationContextAware,InitializingBean,DisposableBean{
+    private String name;
+
+    public void setName(String name) {
+        System.out.println("第二步：设置属性");
+        this.name = name;
     }
-}
-```
 
-II. 实现 org.springframework.beans.factory.InitializingBean 接口，覆盖 afterPropertiesSet() 方法。
+    public Man(){
+        System.out.println("第一步：初始化...");
+    }
+    public void setup(){
+        System.out.println("第七步：MAN被初始化了...");
+    }
 
-```java
-public class ExampleInitializingBean implements InitializingBean {
+    public void teardown(){
+        System.out.println("第十一步：MAN被销毁了...");
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("第三步：设置Bean的名称" + name);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        System.out.println("第四步：了解工厂信息");
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
-        // do something
+        System.out.println("第六步：属性设置后");
     }
-}
-```
 
-## 2. 销毁
-
-I. 配置 destroy-method。
-
-```xml
-<bean id="exampleInitBean" class="examples.ExampleBean" init-method-"cleanup" />
-```
-
-```java
-public class ExampleBean {
-    public void cleanup() {
-        // do something
+    public void run(){
+        System.out.println("第九步：执行业务方法");
     }
-}
-```
 
-II. 实现 org.springframework.beans.factory.DisposableBean 接口，覆盖 destroy() 方法。
-
-```java
-public class ExampleDisposableBean implements DisposableBean {
     @Override
     public void destroy() throws Exception {
-        // do something
+        System.out.println("第十步：执行Spring的销毁方法");
     }
 }
 ```
+
+```java
+public class MyBeanPostProcessor implements BeanPostProcessor {
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        System.out.println("第五步：初始化前方法...");
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(final Object bean, String beanName) throws BeansException {
+        System.out.println("第八步：初始化后方法...");
+        return bean;
+    }
+}
+```
+
+测试方法。
+```java
+@Test
+public void demo(){
+    ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+    Man man = (Man)applicationContext.getBean("man");
+    man.run();
+    applicationContext.close();
+}
+```
+
+配置文件。
+```xml
+<bean id="man" class="com.str818.ioc.Man" init-method="setup" destroy-method="teardown">
+    <property name="name" value="str818"/>
+</bean>
+<bean class="com.str818.ioc.MyBeanPostProcessor"
+```
+
+## 2. BeanPostProcessor 的作用
+
+BeanPostProcessor 能够在不改变原有代码的前提前增强一个类中的方法。
+
+用户增删改查接口。
+```java
+public interface UserDao {
+    public void findAll();
+    public void save();
+    public void update();
+    public void delete();
+}
+```
+
+增删改查具体实现。
+```java
+public class UserDaoImpl implements UserDao {
+    @Override
+    public void findAll() {
+        System.out.println("查询用户。。。");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("保存用户。。。");
+    }
+
+    @Override
+    public void update() {
+        System.out.println("修改用户。。。");
+    }
+
+    @Override
+    public void delete() {
+        System.out.println("删除用户。。。");
+    }
+}
+```
+BeanPostProcessor 类。
+```java
+public class MyBeanPostProcessor implements BeanPostProcessor {
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(final Object bean, String beanName) throws BeansException {
+        // 在保存用户方法执行之前进行「权限校验」
+        if("userDao".equals(beanName)){
+            Object proxy = Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
+                @Override
+                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                    if("save".equals(method.getName())){
+                        System.out.println("==========权限校验=========");
+                        return method.invoke(bean,args);
+                    }
+                    return method.invoke(bean,args);
+                }
+            });
+            return proxy;
+        }else{
+            return bean;
+        }
+    }
+}
+```
+
+# 五、属性注入
+
+## 1. 构造方法注入
+
+```java
+public class User {
+    private String name;
+    private Integer age;
+
+    public User(String name,Integer age){
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}
+```
+
+```xml
+<bean id="user" class="com.str818.ioc.User">
+    <constructor-arg name="name" value="张三" />
+    <constructor-arg name="age" value="22"/>
+</bean>
+```
+
+测试方法。
+```java
+@Test
+public void demo(){
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+    User user = (User)applicationContext.getBean("user");
+    System.out.println(user);
+}
+```
+
+## 2. Set 方法注入
+
+```java
+public class Person {
+    private String name;
+    private Integer age;
+
+    private Cat cat;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Cat getCat() {
+        return cat;
+    }
+
+    public void setCat(Cat cat) {
+        this.cat = cat;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", cat=" + cat +
+                '}';
+    }
+}
+```
+
+```java
+public class Cat {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+```xml
+<bean id="person" class="com.str818.ioc.Person">
+    <property name="name" value="李四"/>
+    <property name="age" value="32"/>
+    <property name="cat" ref="cat"/>
+</bean>
+<bean id="cat" class="com.str818.ioc.Cat">
+    <property name="name" value="ketty"/>
+</bean>
+```
+
+## 3. p 名称空间注入
+
+引入新的 p 名称空间，能够简化 XML 文件配置。
+
+```xml
+<beans xmlns:p="http://www.springframework.org/schema/p">
+    <bean id="person" class="com.imooc.ioc.demo4.Person" p:name="大黄" p:age="34" p:cat-ref="cat"/>
+    <bean id="cat" class="com.imooc.ioc.demo4.Cat" p:name="小黄"/>
+</beans>
+```
+
+## 4. SpEL 注入
+
+SpEL：Spring Expression Language，Spring 表达式语言，对依赖注入进行简化。
+
+语法：`#{表达式}`
+
+`<bean id="" value="#{表达式}">`
+
+- #{'hello'}：使用字符串
+
+- #{beanId}：使用另一个 bean
+
+- #{beanId.content.toUpperCase()}：使用方法
+
+- #{T(java.lang.Math.PI)}：使用静态字段或方法
+
+
+类别类。
+```java
+public class Category {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+```
+
+产品类。
+```java
+public class Product {
+    private String name;
+    private Double price;
+
+    private Category category;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", category=" + category +
+                '}';
+    }
+}
+
+```
+
+产品信息类，计算产品价格。
+```java
+public class ProductInfo {
+    public Double calculatePrice(){
+        return Math.random() * 199;
+    }
+}
+```
+
+配置文件。
+```xml
+<bean id="category" class="com.str818.ioc.Category">
+    <property name="name" value="#{'服装'}"/>
+</bean>
+
+<bean id="productInfo" class="com.str818.ioc.ProductInfo"/>
+
+<bean id="product" class="com.str818.ioc.Product">
+    <property name="name" value="#{'男装'}"/>
+    <property name="price" value="#{productInfo.calculatePrice()}"/>
+    <property name="category" value="#{category}"/>
+</bean>
+```
+
+## 5. 复杂类型的注入
+
+前面四种注入方式都针对的是简单类型，下面分别针对数组、List、Set、Map 与 Properties 类型的属性进行注入。
+
+```java
+public class CollectionBean {
+    private String[] arrs; // 数组类型
+
+    private List<String> list;// List集合类型
+
+    private Set<String> set; // Set集合类型
+
+    private Map<String,Integer> map;// Map集合类型
+
+    private Properties properties; // 属性类型
+
+    public String[] getArrs() {
+        return arrs;
+    }
+
+    public void setArrs(String[] arrs) {
+        this.arrs = arrs;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+
+    public Set<String> getSet() {
+        return set;
+    }
+
+    public void setSet(Set<String> set) {
+        this.set = set;
+    }
+
+    public Map<String, Integer> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, Integer> map) {
+        this.map = map;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    @Override
+    public String toString() {
+        return "CollectionBean{" +
+                "arrs=" + Arrays.toString(arrs) +
+                ", list=" + list +
+                ", set=" + set +
+                ", map=" + map +
+                ", properties=" + properties +
+                '}';
+    }
+}
+```
+```xml
+<bean id="collectionBean" class="com.str818.ioc.CollectionBean">
+    <!--数组类型-->
+    <property name="arrs">
+        <list>
+            <value>aaa</value>
+            <value>bbb</value>
+            <value>ccc</value>
+        </list>
+    </property>
+    <!--List集合的属性注入-->
+    <property name="list">
+        <list>
+            <value>111</value>
+            <value>222</value>
+            <value>333</value>
+        </list>
+    </property>
+    <!--Set集合的属性注入-->
+    <property name="set">
+        <set>
+            <value>ddd</value>
+            <value>eee</value>
+            <value>fff</value>
+        </set>
+    </property>
+    <!--Map集合的属性注入-->
+    <property name="map">
+        <map>
+            <entry key="aaa" value="111"/>
+            <entry key="bbb" value="222"/>
+            <entry key="ccc" value="333"/>
+        </map>
+    </property>
+    <!--Properties的属性注入-->
+    <property name="properties">
+        <props>
+            <prop key="username">root</prop>
+            <prop key="password">1234</prop>
+        </props>
+    </property>
+</bean>
+```
+
+
+
 
 ## 3. 全局配置
 
