@@ -5,9 +5,138 @@ AOP 是 Aspect Oriented Programming 的缩写，意为：面向切面编程，�
 
 主要功能是：日志记录、性能统计、安全控制、事务处理与异常处理等。
 
-## 1. 切面
+AOP 采取横向抽取机制，取代了传统纵向继承体系重复性代码；其使用纯 Java 实现，不需要专门的编译过程和类加载器，在运行期通过代理方式向目标类织入增强代码。
+
+
+# 二、相关术语
+
+```java
+public class UnerDaoImpl implements UserDao {
+    public void save(User user) {}
+    public void update(User user) {}
+    public List find(){}
+    public void delete(User user) {}
+}
+```
+
+## 1. 连接点(Jointpoint)
+
+可以被拦截到的点，「增删改查」四个方法都可以被增强，这些方法被称为连接点。
+
+## 2. 切入点(Pointcut)
+
+真正被拦截到的点。
+
+若只想对 save 方法进行增强（做权限校验），save 方法称为切入点。
+
+## 3. 通知(Advice)
+
+拦截后要做的事情。
+
+若对 save 方法进行权限校验，权限校验的方法称为通知。
+
+## 4. 目标(Target)
+
+被增强的对象，这里被增强的 UnerDaoImpl 对象称为目标。
+
+## 5. 织入(Weaving)
+
+将 Advice 应用到 Target 的过程。
+
+将权限校验应用到 UnerDaoImpl 的 save 方法的这个过程。
+
+## 6. 代理(Proxy)
+
+被应用增强后，产生了一个代理对象。
+
+## 7. 切面(Aspect)
+
+切入点和通知的组合。
 
 <div align="center">  <img src="img/aspect.png" width="40%"/> </div><br>
+
+# 三、底层实现
+
+## 1. JDK 动态代理
+
+通过 JDK 动态代理的方式在调用 save 方法之前进行权限校验。
+
+用户数据处理接口。
+```java
+public interface UserDao {
+    public void save();
+    public void update();
+    public void delete();
+    public void find();
+}
+```
+
+用户数据处理实现类。
+```java
+public class UserDaoImpl implements UserDao{
+
+    @Override
+    public void save() {
+        System.out.println("保存用户...");
+    }
+
+    @Override
+    public void update() {
+        System.out.println("修改用户...");
+    }
+
+    @Override
+    public void delete() {
+        System.out.println("删除用户...");
+    }
+
+    @Override
+    public void find() {
+        System.out.println("查询用户...");
+    }
+}
+```
+
+代理类。
+```java
+public class MyJdkProxy implements InvocationHandler {
+
+    private UserDao userDao;
+
+    public MyJdkProxy(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public Object createProxy(){
+        Object proxy = Proxy.newProxyInstance(userDao.getClass().getClassLoader(), userDao.getClass().getInterfaces(), this);
+        return proxy;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if("save".equals(method.getName())){
+            System.out.println("权限校验");
+            return method.invoke(userDao, args);
+        }
+        return method.invoke(userDao, args);
+    }
+}
+```
+
+测试方法。
+
+```java
+@Test
+public void demo(){
+    UserDao userDao = new UserDaoImpl();
+    UserDao proxy = (UserDao) new MyJdkProxy(userDao).createProxy();
+    proxy.save();
+    proxy.update();
+    proxy.delete();
+    proxy.find();
+}
+```
+
 
 ## 2. 实现方式
 
