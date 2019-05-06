@@ -398,47 +398,57 @@ public class SpringDemo4 {
 }
 ```
 
+# 六、传动 AOP 自动代理
 
+前面的案例中，每个代理都是通过 ProxyFactoryBean 织入切面代理，在实际开发中，非常多的 Bean 每个都配置 ProxyFactoryBean 开发维护量巨大。
 
-## 3. 相关概念
+使用自动创建代理可以解决这一问题。
 
-|         名称         |                             说明                             |
-| :------------------: | :----------------------------------------------------------: |
-|    切面 (Aspect)     |       一个关注点的模块化，这个关注点可能会横切多个对象       |
-|  连接点 (Joinpoint)  |                 程序执行过程中的某个特定的点                 |
-|    通知 (Advice)     |             在切面的某个特定的连接点上执行的动作             |
-|  切入点 (Pointcut)   |    匹配连接点的断言，在 AOP 中通知和一个切入点表达式关联     |
-| 引入 (Introduction)  |        在不修改类代码的前提下，为类添加新的方法和属性        |
-| AOP 代理 (AOP Proxy) |    AOP 框架创建的对象，用来实现切面契约 (aspect contract)    |
-|    织入 (Weaving)    | 把切面连接到其它的应用程序类型或者对象上，并创建一个被通知的对象，分为：编译型织入、类加载时织入、执行时织入 |
+- BeanNameAutoProxyCreator 根据 Bean 名称创建代理
+- DefaultAdvisorAutoProxyCreator 根据 Advisor 本身包含信息创建代理
+- AnnotationAwareAspectJAutoProxyCreator 基于 Bean 中的 AspectJ 注解进行自动代理
 
+## 1. 根据名称创建代理
 
-## 5. AOP 的配置
+BeanNameAutoProxyCreator
 
-Spring 所有的切面和通知器都必须放在一个 `<aop:config>` 内，每一个 `<aop:config>` 可以包含 pointcut、advisor 和 aspect 元素（必须按照顺序进行声明）。
+对所有以 DAO 结尾的 Bean 的所有方法使用代理。
 
 ```xml
-<aop:config>
-	<aop:aspect id="myAspect" ref="aBean">
-        <aop:pointcut id="businessService"
-                      expecution="excution(* com.xyz.myapp.service..(..))"/>
-        <aop:before mehtod="before" pointcut-ref="businessService"/>
-        <aop:after-returning method="afterReturning" pointcut-ref="businessService"/>
-        <aop:after-throwing method="afterThrowing" pointcut-ref="businessService"/>
-        <aop:after method="after" pointcut-ref="businessService"/>
-        <aop:around method="around" pointcut-ref="businessService"/>
-    	...
-    </aop:aspect>
-</aop:config>
+<!--配置目标类-->
+<bean id="studentDao" class="com.str818.aop.demo5.StudentDaoImpl"/>
+<bean id="customerDao" class="com.str818.aop.demo5.CustomerDao"/>
 
-<bean id="aBean" class="...">
-	...
+<!-- 配置增强-->
+<bean id="myBeforeAdvice" class="com.str818.aop.demo5.MyBeforeAdvice"/>
+<bean id="myAroundAdvice" class="com.str818.aop.demo5.MyAroundAdvice"/>
+
+<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+    <property name="beanNames" value="*Dao"/>
+    <property name="interceptorNames" value="myBeforeAdvice"/>
 </bean>
 ```
 
+## 2. 根据切面信息创建代理
 
+DefaultAdvisorAutoProxyCreator
 
+只对 CustomerDao 中的 save 方法进行增强。
 
+```xml
+<!--配置目标类-->
+<bean id="studentDao" class="com.str818.aop.demo6.StudentDaoImpl"/>
+<bean id="customerDao" class="com.str818.aop.demo6.CustomerDao"/>
 
-# 二、AOP 基本概念
+<!--配置增强-->
+<bean id="myBeforeAdvice" class="com.str818.aop.demo6.MyBeforeAdvice"/>
+<bean id="myAroundAdvice" class="com.str818.aop.demo6.MyAroundAdvice"/>
 
+<!--配置切面-->
+<bean id="myAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="pattern" value="com\.str818\.aop\.demo6\.CustomerDao\.save"/>
+    <property name="advice" ref="myAroundAdvice"/>
+</bean>
+
+<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+```
