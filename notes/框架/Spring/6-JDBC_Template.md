@@ -68,7 +68,7 @@ jdbcTemplate.execute("create table user1(id int,name varchar(20))");
 
 ## 3. update 与 batchUpdate
 
-### update 方法
+### I. update 方法
 
 对数据进行增删改操作。
 
@@ -85,7 +85,7 @@ String sql = "update student set sex=? where id=?";
 jdbcTemplate.update(sql,"女",1003);
 ```
 
-### batchUpdate
+### II. batchUpdate
 
 批量增删改操作。
 
@@ -111,7 +111,7 @@ jdbcTemplate.batchUpdate(sql,list);
 
 ## 3. 查询
 
-### 简单数据项
+### I. 简单数据项
 
 获取一个结果。
 ```java
@@ -127,7 +127,7 @@ List<String> names = jdbcTemplate.queryForList(sql,String.class,"女");
 System.out.println(names);
 ```
 
-### 复杂对象（封装为 Map）
+### II. 复杂对象（封装为 Map）
 
 获取一个结果。
 ```java
@@ -143,7 +143,7 @@ List<Map<String,Object>> stus = jdbcTemplate.queryForList(sql);
 System.out.println(stus);
 ```
 
-### 复杂对象（封装为实体对象）
+### III. 复杂对象（封装为实体对象）
 
 获取一个结果。
 ```java
