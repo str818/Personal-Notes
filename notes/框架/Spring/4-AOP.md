@@ -137,6 +137,80 @@ public void demo(){
 }
 ```
 
+## 2. CGLIB 代理
+
+对于不使用接口的业务类，无法使用 JDK 动态代理。
+
+CGlib 采用非常底层的字节码技术，可以为一个类创建子类，解决无接口的代理问题。
+
+用户数据处理类。
+```java
+public class ProductDao {
+
+    public void save(){
+        System.out.println("保存商品...");
+    }
+
+    public void update(){
+        System.out.println("修改商品...");
+    }
+
+    public void delete(){
+        System.out.println("删除商品...");
+    }
+
+    public void find(){
+        System.out.println("查询商品...");
+    }
+}
+```
+
+代理类。
+```java
+public class MyCglibProxy implements MethodInterceptor {
+
+    private  ProductDao productDao;
+
+    public MyCglibProxy(ProductDao productDao) {
+        this.productDao = productDao;
+    }
+
+    public Object createProxy(){
+        // 1. 创建核心类
+        Enhancer enhancer = new Enhancer();
+        // 2. 设置父类
+        enhancer.setSuperclass(productDao.getClass());
+        // 3. 设置回调
+        enhancer.setCallback(this);
+        // 4. 生成代理
+        Object proxy = enhancer.create();
+        return proxy;
+    }
+
+    @Override
+    public Object intercept(Object proxy, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+        if("save".equals(method.getName())){
+            System.out.println("权限校验");
+            return methodProxy.invokeSuper(proxy, args);
+        }
+        return methodProxy.invokeSuper(proxy, args);
+    }
+}
+```
+
+测试方法。
+```java
+@Test
+public void demo(){
+    ProductDao productDao = new ProductDao();
+    ProductDao proxy = (ProductDao) new MyCglibProxy(productDao).createProxy();
+    proxy.save();
+    proxy.update();
+    proxy.delete();
+    proxy.find();
+}
+```
+
 
 ## 2. 实现方式
 
