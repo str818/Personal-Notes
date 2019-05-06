@@ -245,6 +245,159 @@ public void demo(){
 
 ## 1. Advisor
 
+```java
+public interface StudentDao {
+    public void find();
+    public void save();
+    public void update();
+    public void delete();
+}
+```
+```java
+public class StudentDaoImpl implements StudentDao {
+    @Override
+    public void find() {
+        System.out.println("学生查询");
+    }
+
+    @Override
+    public void save() {
+        System.out.println("学生保存");
+    }
+
+    @Override
+    public void update() {
+        System.out.println("学生插入");
+    }
+
+    @Override
+    public void delete() {
+        System.out.println("学生删除");
+    }
+}
+```
+```java
+public class MyBeforeAdvice implements MethodBeforeAdvice {
+    @Override
+    public void before(Method method, Object[] objects, Object o) throws Throwable {
+        System.out.println("==前置增强==");
+    }
+}
+```
+```xml
+    <!--配置目标类-->
+    <bean id="studentDao" class="com.str818.aop.demo3.StudentDaoImpl"/>
+
+    <!--前置通知类型-->
+    <bean id="myBeforeAdvice" class="com.str818.aop.demo3.MyBeforeAdvice"/>
+
+    <!--Spring的AOP 产生代理对象-->
+    <bean id="studentDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--配置目标类-->
+        <property name="target" ref="studentDao"/>
+        <!--实现的接口-->
+        <property name="proxyInterfaces" value="com.str818.aop.demo3.StudentDao"/>
+        <!--采用拦截的名称-->
+        <property name="interceptorNames" value="myBeforeAdvice"/>
+        <property name="optimize" value="true"></property>
+    </bean>
+```
+
+测试类。
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
+public class SpringDemo3{
+
+    @Resource(name = "studentDaoProxy")
+    private StudentDao studentDao;
+
+    @Test
+    public void test(){
+        studentDao.find();
+        studentDao.save();
+        studentDao.update();
+        studentDao.delete();
+    }
+}
+```
+
+## 2. PointcutAdvisor
+
+使用普通 Advice 作为切面，将对目标类所有方法进行拦截，不够灵活，在实际开发中常采用带有切点的切面。
+
+```java
+public class CustomerDao {
+
+    public void find(){
+        System.out.println("查询客户...");
+    }
+
+    public void save(){
+        System.out.println("保存客户...");
+    }
+
+    public void update(){
+        System.out.println("修改客户...");
+    }
+
+    public void delete(){
+        System.out.println("删除客户...");
+    }
+}
+```
+```java
+public class MyAroundAdvice implements MethodInterceptor {
+    @Override
+    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+
+        System.out.println("==环绕前增强==");
+        Object obj = methodInvocation.proceed();
+        System.out.println("==环绕后增强==");
+
+        return obj;
+    }
+}
+```
+```xml
+<!--配置目标类-->
+    <bean id="customerDao" class="com.str818.aop.demo4.CustomerDao"/>
+    <!--配置通知-->
+    <bean id="myAroundAdvice" class="com.str818.aop.demo4.MyAroundAdvice"/>
+
+    <!--一般的切面是使用通知作为切面的，因为要对目标类的某个方法进行增强就需要配置一个带有切入点的切面-->
+    <bean id="myAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="pattern" value=".*save.*"/>
+        <property name="advice" ref="myAroundAdvice"/>
+    </bean>
+
+    <!--配置产生代理-->
+    <bean id="customerDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="customerDao"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="interceptorNames" value="myAdvisor"/>
+    </bean>
+```
+
+测试类。
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext2.xml")
+public class SpringDemo4 {
+
+    @Resource(name="customerDaoProxy")
+    private CustomerDao customerDao;
+
+    @Test
+    public void demo1(){
+        customerDao.find();
+        customerDao.save();
+        customerDao.update();
+        customerDao.delete();
+    }
+}
+```
+
 
 
 ## 3. 相关概念
