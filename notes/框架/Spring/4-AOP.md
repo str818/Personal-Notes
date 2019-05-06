@@ -398,7 +398,7 @@ public class SpringDemo4 {
 }
 ```
 
-# 六、传动 AOP 自动代理
+# 六、传统 AOP 自动代理
 
 前面的案例中，每个代理都是通过 ProxyFactoryBean 织入切面代理，在实际开发中，非常多的 Bean 每个都配置 ProxyFactoryBean 开发维护量巨大。
 
