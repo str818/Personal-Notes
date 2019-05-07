@@ -155,7 +155,7 @@ public void demo1() {
 ```
 
 
-# 三、Spring 的 Bean 配置
+# 四、Spring 的 Bean 配置
 
 `spring-ioc.xml` 配置文件。
 

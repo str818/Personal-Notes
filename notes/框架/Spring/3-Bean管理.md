@@ -777,7 +777,7 @@ public class UserService {
 }
 ```
 
-## 4. 其他注解
+## 3. 其他注解
 
 ### I. @PostConstruct 和 @PreDestroy
 
