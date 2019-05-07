@@ -109,7 +109,7 @@ list.add(new Object[]{1005,1003});
 jdbcTemplate.batchUpdate(sql,list);
 ```
 
-## 3. 查询
+## 4. 查询
 
 ### I. 简单数据项
 
