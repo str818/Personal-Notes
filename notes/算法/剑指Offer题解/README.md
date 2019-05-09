@@ -155,3 +155,34 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
     return list;
 }
 ```
+
+# 5. 重建二叉树
+
+[Online Programming Link](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定二叉树的先序与中序遍历，重建二叉树。
+
+解题思路：二叉树先序遍历的第一个结点是根节点，找到其在中序遍历里的位置，二分。
+
+```java
+public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+    return reConstructBinaryTree(pre,0,in,0,in.length);
+}
+
+public TreeNode reConstructBinaryTree(int[] pre, int preIndex, int[] in, int start, int end){
+    if(preIndex >= pre.length || start == end) return null;
+    
+    TreeNode root = new TreeNode(pre[preIndex]);
+    
+    for(int i = start; i < end; i++){
+        if(pre[preIndex] == in[i]){
+            root.left = reConstructBinaryTree(pre, preIndex + 1, in, start, i);
+            root.right = reConstructBinaryTree(pre, preIndex + i - start + 1, in, i + 1, end);
+        }
+    }
+    
+    return root;
+}
+```
+
+
