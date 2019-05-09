@@ -1,0 +1,67 @@
+# 1. 数组中重复的数字
+
+[Online Programming Link](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## I. 找出数组中的重复数字
+
+题目描述：在一个长度为 n 的数组里，所有的数字都在 0 ~ n-1 的范围内。数组中某些数字是重复的，找出数组中任意一个重复的数字。
+
+解题思路：首先可以考虑排序，时间复杂度 O(nlogn)；其次哈希表也能够解决，时间复杂度 O(n)，额外空间复杂度 O(n);最优的解法时间复杂度 O(n)，额外空间复杂度 O(1)。
+
+数组中的数字都在 0 ~ n-1 的范围内，如果数组中没有重复的数字，那么当数组排序后数字 i 将都会出现在下标为 i 的位置。如果有重复数字，就不出现不止一个数字 i 出现在下标为 i 的位置，利用这一原理可以求解。
+
+```java
+public boolean duplicate(int[] nums,int length,int []duplication) {
+    
+    if(nums == null || length <= 0) return false;
+    
+    for(int i = 0; i < length; i++){
+        while(nums[i] != i){
+            if(nums[i] == nums[nums[i]]){
+                duplication[0] = nums[i];
+                return true;
+            }
+            int t = nums[i];
+            nums[i] = nums[t];  // 注意不能写成 nums[nums[i]]
+            nums[t] = t;
+        }
+    }
+    return false;
+}
+```
+
+## II. 不修改数组找出重复的数字
+
+解题思路：可以开辟一个数组，依次将原数组中的元素放入对应的位置，判断是否重复，额外空间复杂度 O(n)；还有一种额外空间复杂度 O(1) 的方法，利用二分的思想，把从 1 ~ n 的数字从中间的数字 m 分为两部分，前面一半为 1 ~ m，后面一半为 m + 1 ~ n。如果 1 ~ m 的数字数目超过 m，那么这一版的区间一定包含重复的数字。
+
+```java
+public int getDuplication(int[] nums, int length){
+    if(nums == null || length <= 0) return -1;
+    int start = 1;
+    int end = length - 1;
+    while(end >= start){
+        int mid = start + ((end - start) >> 1);
+        int count = countRange(nums, length, start, middle);
+        if(end == start){
+            if(count > 1) return start;
+            else break;
+        }
+        if(count > (middle - start + 1)){
+            end = middle;
+        }else{
+            start = middle;
+        }
+    }
+}
+
+public int countRange(int[] nums, int length, int start, int end){
+    if(nums == null) return 0;
+    int count = 0;
+    for(int i = 0; i < length; i++){
+        if(nums[i] >= start && numbers[i] <= end){
+            ++count;
+        }
+    }
+    return count;
+}
+```
