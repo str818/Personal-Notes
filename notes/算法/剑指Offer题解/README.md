@@ -76,7 +76,7 @@ public int countRange(int[] nums, int length, int start, int end){
 
 ```java
 public boolean Find(int target, int[][] matrix) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
         return false;
     int rows = matrix.length, cols = matrix[0].length;
     int r = 0, c = cols - 1;
@@ -89,5 +89,36 @@ public boolean Find(int target, int[][] matrix) {
             c--;
     }
     return false;
+}
+```
+
+# 3. 替换空格
+
+[Online Programming Link](https://www.nowcoder.com/practice/4060ac7e3e404ad1a894ef3e17650423?tpId=13&tqId=11155&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：将字符串中的空格替换成"%20"。
+
+解题思路：如果从前向后替换的话，需要不断将后面的字符后移，所以可以先遍历字符串将需要添加的字符数量扩充到字符串的后面，从后向前依次替换。
+
+```java
+public String replaceSpace(StringBuffer str) {
+    int p1 = str.length() - 1;
+    for(int i = 0; i <= p1; i++){
+        if(str.charAt(i) == ' '){
+            str.append("  ");
+        }
+    }
+    int p2 = str.length() - 1;
+    while(p1 >= 0 && p2 > p1){
+        char c = str.charAt(p1--);
+        if(c == ' '){
+            str.setCharAt(p2--, '0');
+            str.setCharAt(p2--, '2');
+            str.setCharAt(p2--, '%');
+        }else{
+            str.setCharAt(p2--, c);
+        }
+    }
+    return str.toString();
 }
 ```
