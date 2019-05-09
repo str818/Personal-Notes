@@ -127,7 +127,7 @@ public String replaceSpace(StringBuffer str) {
 
 [Online Programming Link](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-## I. 递归
+解法一：递归
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -140,7 +140,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-## II. 栈
+解法二：栈。
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
