@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5512f3b4-b9f5-4ccc-8e52-b70375f72160" name="Default Changelist" comment="" />
+    <list default="true" id="5512f3b4-b9f5-4ccc-8e52-b70375f72160" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../notes/Java/并发/1-并发基础.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../notes/Java/并发/1-并发基础.md" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,37 +21,28 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="13" />
+          <entry key="java" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="13" />
+          <entry key="JAVA" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1293" />
+          <entry key="java" value="1424" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1293" />
+          <entry key="JAVA" value="1424" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/str818/basic/ThreadStatusDemo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/str818/basic/Request.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -152,11 +145,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/str818/basic/InterruptDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+            <state relative-caret-position="400">
+              <caret line="18" column="5" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="18" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/str818/basic/InterruptDemo2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -194,6 +199,7 @@
         <option value="$PROJECT_DIR$/src/com/str818/basic/PrintProcessor.java" />
         <option value="$PROJECT_DIR$/src/com/str818/basic/App.java" />
         <option value="$PROJECT_DIR$/src/com/str818/basic/InterruptDemo.java" />
+        <option value="$PROJECT_DIR$/src/com/str818/basic/InterruptDemo2.java" />
       </list>
     </option>
   </component>
@@ -204,8 +210,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="754" />
-    <option name="y" value="39" />
+    <option name="x" value="869" />
+    <option name="y" value="28" />
     <option name="width" value="1653" />
     <option name="height" value="1047" />
   </component>
@@ -246,10 +252,17 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557755462038" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557756179256" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/str818/basic/PrevProcessor.java" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/com/str818/basic/PrevProcessor.java" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.str818.basic" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -263,7 +276,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.InterruptDemo">
+  <component name="RunManager" selected="Application.InterruptDemo2">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.str818.basic.App" />
       <module name="Concurrency" />
@@ -279,6 +292,19 @@
     </configuration>
     <configuration name="InterruptDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.str818.basic.InterruptDemo" />
+      <module name="Concurrency" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.str818.basic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InterruptDemo2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.str818.basic.InterruptDemo2" />
       <module name="Concurrency" />
       <extension name="coverage">
         <pattern>
@@ -307,9 +333,11 @@
       <item itemvalue="Application.ThreadStatusDemo" />
       <item itemvalue="Application.App" />
       <item itemvalue="Application.InterruptDemo" />
+      <item itemvalue="Application.InterruptDemo2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.InterruptDemo2" />
         <item itemvalue="Application.InterruptDemo" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.ThreadStatusDemo" />
@@ -326,15 +354,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1557737895091</updated>
-      <workItem from="1557737900297" duration="6172000" />
+      <workItem from="1557737900297" duration="6881000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6172000" />
+    <option name="totallyTimeSpent" value="6881000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="754" y="39" width="1653" height="1047" extended-state="0" />
+    <frame x="869" y="28" width="1653" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
@@ -491,8 +519,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/str818/basic/InterruptDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+        <state relative-caret-position="400">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/str818/basic/InterruptDemo2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
