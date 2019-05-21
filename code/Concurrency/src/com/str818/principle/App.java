@@ -1,18 +1,18 @@
 package com.str818.principle;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 public class App {
 
     public static boolean stop = false;
 
     public static void main(String[] args) throws InterruptedException {
-        Thread t1 = new Thread(()->{
-            int i = 0;
-            while(!stop){
-                i++;
-            }
-        });
-        t1.start();
-        Thread.sleep(1000);
-        stop = true;
+
+        ReadWriteLock lock = new ReentrantReadWriteLock();
+
+        lock.readLock().lock();
     }
 }
