@@ -174,3 +174,32 @@ private void extendPalindrome(String s, int j, int k) {
     }
 }
 ```
+
+# 整数反转
+
+[Leetcode - 7 Reverse Integer (Easy)](https://leetcode.com/problems/reverse-integer/)
+
+题目描述：反转一个 32 位有符号的整数。
+
+```
+Input: -123
+Output: -321
+```
+
+解题思路：注意整型范围越界。
+
+```java
+public int reverse(int x) {
+    int result = 0;
+    while (x != 0) {
+        int tail = x % 10;
+        int newResult = result * 10 + tail;
+        if ((newResult - tail) / 10 != result) {
+            return 0;
+        }
+        result = newResult;
+        x /= 10;
+    }
+    return result;
+}
+```
