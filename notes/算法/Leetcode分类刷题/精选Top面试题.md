@@ -58,3 +58,31 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     return dummyHead.next;
 }
 ```
+
+# 无重复字符的最长子串
+
+[Leetcode - 3 Longest Substring Without Repeating Characters (Medium)](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
+
+```
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+```
+
+解题思路：使用 HashMap 记录出现字符的位置，利用双指针滑动窗口记录子串的长度。
+
+```java
+public int lengthOfLongestSubstring(String s) {
+    if (s == null || s.length() == 0) return 0;
+    Map<Character, Integer> map = new HashMap<>();
+    int max = 0;
+    for (int i = 0, j = 0; i < s.length(); i++) {
+        if (map.containsKey(s.charAt(i))) {
+            j = Math.max(j, map.get(s.charAt(i)) + 1);
+        }
+        map.put(s.charAt(i), i);
+        max = Math.max(max, i - j + 1);
+    }
+    return max;
+}
+```
