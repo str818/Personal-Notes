@@ -102,9 +102,11 @@ The median is 2.0
 
 解题思路：二分。
 
+```
       left_part          |        right_part
 A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
 B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
+```
 
 ```java
 public double findMedianSortedArrays(int[] A, int[] B) {
