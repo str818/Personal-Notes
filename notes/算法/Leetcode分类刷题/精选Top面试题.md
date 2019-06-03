@@ -275,3 +275,54 @@ public int maxArea(int[] height) {
     return max;
 }
 ```
+
+# 罗马数字转整数
+
+[Leetcode - 13 Roman to Integer (Easy)](https://leetcode.com/problems/roman-to-integer/)
+
+题目描述：
+
+```
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+```
+
+- I can be placed before V (5) and X (10) to make 4 and 9. 
+- X can be placed before L (50) and C (100) to make 40 and 90. 
+- C can be placed before D (500) and M (1000) to make 400 and 900.
+
+```
+Input: "MCMXCIV"
+Output: 1994
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+```
+
+```java
+public int romanToInt(String s) {
+    int count = 0;
+    int prev = 0;
+    for (int x = s.length()-1; x >= 0; x--) {
+        int cur = 0;
+        if (s.charAt(x) == 'M') { cur=1000; }
+        if (s.charAt(x) == 'D') { cur=500; }
+        if (s.charAt(x) == 'C') { cur=100; }
+        if (s.charAt(x) == 'L') { cur=50; }
+        if (s.charAt(x) == 'X') { cur=10; }
+        if (s.charAt(x) == 'V') { cur=5; }
+        if (s.charAt(x) == 'I') { cur=1; }
+        if (prev > cur) {
+            count -= cur;
+        } else {
+            count+=cur;
+        }
+        prev = cur;
+    }
+    return count;
+}
+```
