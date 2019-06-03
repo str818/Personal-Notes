@@ -319,10 +319,33 @@ public int romanToInt(String s) {
         if (prev > cur) {
             count -= cur;
         } else {
-            count+=cur;
+            count += cur;
         }
         prev = cur;
     }
     return count;
+}
+```
+
+# 最长公共前缀
+
+[Leetcode - 14 Longest Common Prefix (Easy)](https://leetcode.com/problems/longest-common-prefix/)
+
+```
+Input: ["flower","flow","flight"]
+Output: "fl"
+```
+
+```java
+public String longestCommonPrefix(String[] strs) {
+    if (strs.length == 0) return "";
+    String prefix = strs[0];
+    for (int i = 1; i < strs.length; i++) {
+        while (strs[i].indexOf(prefix) != 0) {
+            prefix = prefix.substring(0, prefix.length() - 1);
+            if (prefix.isEmpty()) return "";
+        }
+    }
+    return prefix;
 }
 ```
