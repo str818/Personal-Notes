@@ -252,3 +252,26 @@ public boolean isMatch(String s, String p) {
     return dp[s.length()][p.length()];
 }
 ```
+
+# 盛最多水的容器
+
+[Leetcode - 11 Container With Most Water (Medium)](https://leetcode.com/problems/container-with-most-water/)
+
+题目描述：找出两条线，使得构成的容器能够容纳最多的水。
+
+<div align="center">  <img src="img/leetcode_11.jpg" width="80%"/> </div><br>
+
+```java
+public int maxArea(int[] height) {
+    int max = 0, i = 0, j = height.length - 1;
+    while (i < j) {
+        max = Math.max(max, (j - i) * Math.min(height[i], height[j]));
+        if (height[i] < height[j]) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+    return max;
+}
+```
