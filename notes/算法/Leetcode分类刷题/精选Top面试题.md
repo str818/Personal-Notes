@@ -349,3 +349,46 @@ public String longestCommonPrefix(String[] strs) {
     return prefix;
 }
 ```
+
+# 三数之和
+
+[Leetcode - 15 3Sum (Medium)](https://leetcode.com/problems/3sum/)
+
+题目描述：找出数组中三数和为 0 的组合。
+
+```
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+解题思路：注意去重。
+
+```java
+public List<List<Integer>> threeSum(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> res = new ArrayList<>();
+    for(int i = 0; i < nums.length - 2; i++){
+        if(i == 0 || (i > 0 && nums[i] != nums[i - 1])){
+            int l = i + 1, r = nums.length - 1;
+            while(l < r){
+                if(nums[i] + nums[l] + nums[r] == 0){
+                    res.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                    while(l < r && nums[l] == nums[l + 1]) l++;
+                    while(l < r && nums[r] == nums[r - 1]) r--;
+                    l++; r--;
+                }else if(nums[i] + nums[l] + nums[r] < 0){
+                    l++;
+                }else{
+                    r--;
+                }
+            }
+        }
+    }
+    return res;
+}
+```
