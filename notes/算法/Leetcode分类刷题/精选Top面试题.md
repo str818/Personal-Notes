@@ -397,12 +397,16 @@ public List<List<Integer>> threeSum(int[] nums) {
 
 [Leetcode - 17 Letter Combinations of a Phone Number (Medium)](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
 
+题目描述：输出数字键盘 9 宫格可能的所有字母组合。
+
 <div align="center">  <img src="img/leetcode-17.png" width="50%"/> </div><br>
 
 ```
 Input: "23"
 Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 ```
+
+解题思路：用 Map 存储数字对应的字母，回溯遍历所有情况。
 
 ```java
 Map<String, String> map = new HashMap<String, String>(){{
