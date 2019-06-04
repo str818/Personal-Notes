@@ -524,3 +524,41 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     return dummyHead.next;
 }
 ```
+
+# 生成括号
+
+[Leetcode - 22 Generate Parentheses (Medium)](https://leetcode.com/problems/generate-parentheses/)
+
+题目描述：给定整数 n，生成包含 n 个括号合法字符串的所有组合。
+
+```
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+```
+解题思路：结合合法括号的特性。
+
+```java
+public List<String> generateParenthesis(int n) {
+    List<String> ansList = new ArrayList<String>();
+    backtrack(ansList, "", 0, 0, n);
+    return ansList;
+}
+
+public void backtrack(List<String> ansList, String curString, int openCount, int closeCount, int max){
+    if(curString.length() == 2 * max){
+        ansList.add(curString);
+        return;
+    }
+    if(openCount < max){
+        backtrack(ansList, curString + '(', openCount + 1, closeCount, max);
+    }
+    if(closeCount < openCount){
+        backtrack(ansList, curString + ')', openCount, closeCount + 1, max);
+    }
+} 
+```
