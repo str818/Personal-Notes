@@ -392,3 +392,39 @@ public List<List<Integer>> threeSum(int[] nums) {
     return res;
 }
 ```
+
+# 电话号码的字母组合
+
+[Leetcode - 17 Letter Combinations of a Phone Number (Medium)](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
+
+<div align="center">  <img src="img/leetcode-17.png" width="50%"/> </div><br>
+
+```
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+```
+
+```java
+Map<String, String> map = new HashMap<String, String>(){{
+    put("2", "abc"); put("3", "def"); put("4", "ghi");
+    put("5", "jkl"); put("6", "mno"); put("7", "pqrs");
+    put("8", "tuv"); put("9", "wxyz");
+}};
+List<String> res = new ArrayList<>();
+public List<String> letterCombinations(String digits) {
+    if (digits.length() != 0) {
+        helper(digits, "");
+    }
+    return res;
+}
+public void helper(String digits, String s) {
+    if (s.length() == digits.length()) {
+        res.add(s);
+    } else {
+        String tmp = map.get(digits.charAt(s.length()) + "");
+        for (char c : tmp.toCharArray()) {
+            helper(digits, s + c);
+        }
+    }
+}
+```
