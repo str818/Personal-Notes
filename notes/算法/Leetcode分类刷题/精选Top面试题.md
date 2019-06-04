@@ -462,3 +462,65 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
     return dummyHead.next;
 }
 ```
+
+# 有效的括号
+
+[Leetcode - 20 Valid Parenthese (Easy)](https://leetcode.com/problems/valid-parentheses/)
+
+题目描述：给定字符串，判断括号是否有效。
+
+```
+Input: "()[]{}"
+Output: true
+```
+
+```java
+public boolean isValid(String s) {
+    Stack<Character> stack = new Stack<>();
+    for (Character c : s.toCharArray()){
+        if(c == '('){
+            stack.push(')');
+        }else if(c == '['){
+            stack.push(']');
+        }else if(c == '{'){
+            stack.push('}');
+        }else if(stack.isEmpty() || stack.pop() != c){
+            return false;
+        }
+    }
+    return stack.isEmpty();
+}
+```
+
+# 合并两个有序链表
+
+[Leetcode - 21 Merge Two Sorted Lists (Easy)](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+```
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+```
+
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode dummyHead = new ListNode(0);
+    ListNode cur = dummyHead;
+    while(l1 != null && l2 != null){
+        if(l1.val > l2.val){
+            cur.next = l2;
+            l2 = l2.next;
+        }else{
+            cur.next = l1;
+            l1 = l1.next;
+        }
+        cur = cur.next;
+    }
+    if(l1 != null){
+        cur.next = l1;
+    }
+    if(l2 != null){
+        cur.next = l2;
+    }
+    return dummyHead.next;
+}
+```
