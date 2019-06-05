@@ -608,3 +608,27 @@ public static ListNode merge(ListNode l1,ListNode l2){
     }
 }
 ```
+
+# 删除有序数组中的重复项
+
+[Leetcode - 26 Remove Duplicates from Sorted Array (Easy)](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)
+
+```
+Given nums = [0,0,1,1,1,2,2,3,3,4],
+
+Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.
+
+It doesn't matter what values are set beyond the returned length.
+```
+
+```java
+public int removeDuplicates(int[] nums) {
+    int index = 0;
+    for (int i = 0; i < nums.length; i++) {
+        if (i == 0 || nums[i] != nums[i - 1]) {
+            nums[index++] = nums[i];
+        }
+    }
+    return index;
+}
+```
