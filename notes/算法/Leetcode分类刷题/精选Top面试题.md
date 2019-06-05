@@ -632,3 +632,34 @@ public int removeDuplicates(int[] nums) {
     return index;
 }
 ```
+
+# 实现 strStr()
+
+[Leetcode - 28. Implement strStr() (Easy)](https://leetcode.com/problems/implement-strstr/)
+
+题目描述：返回匹配字符串首字母的下标，不存在返回 -1。
+
+```
+Input: haystack = "hello", needle = "ll"
+Output: 2
+```
+
+解题思路：注意 needle 长度为 0 时返回 0，而不是 -1。
+
+```java
+public int strStr(String haystack, String needle) {
+    int l1 = haystack.length(), l2 = needle.length();
+    if (l1 < l2) {
+        return -1;
+    } else if (l2 == 0) {
+        return 0;
+    }
+    int threshold = l1 - l2;
+    for (int i = 0; i <= threshold; ++i) {
+        if (haystack.substring(i,i + l2).equals(needle)) {
+            return i;
+        }
+    }
+    return -1;
+}
+```
