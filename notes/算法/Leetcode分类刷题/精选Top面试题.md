@@ -752,3 +752,47 @@ public int search(int[] nums, int target) {
     return nums[lo] == target ? lo : -1;
 }
 ```
+
+# 在排序数组中查找元素的第一个和最后一个位置
+
+[Leetcode - 34 Find First and Last Position of Element in Sorted Array (Medium)](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+题目描述：给定一个有序序列与一个 target 值，求出 target 在有序序列中的区间，时间复杂度要求为 O(logn)，若没有 target 值，则返回 [-1, -1]。
+
+```
+Input: nums = [5,7,7,8,8,10], target = 8
+Output: [3,4]
+```
+
+解题思路：时间复杂度 O(logn)，依旧是二分法，经典的二分法只需找到一个元素，本题需要对二分法进行改进，分两次查找，第一次找到左区间的位置，第二次找到右区间的位置。
+
+```java
+public int[] searchRange(int[] nums, int target) {
+    if(nums.length == 0) return new int[]{-1, -1};
+    int[] ans = new int[]{-1, -1};
+    int l = 0, r = nums.length - 1;
+    // 左闭区间
+    while(l < r){
+        int mid = (l + r)/2;
+        if(target <= nums[mid]){
+            r = mid;
+        }else{
+            l = mid + 1;
+        }
+    }
+    if(nums[l] != target) return ans;
+    ans[0] = l;
+    // 右闭区间
+    r = nums.length - 1;
+    while(l < r){
+        int mid = (l + r)/2 + 1;
+        if(target >= nums[mid]){
+            l = mid;
+        }else{
+            r = mid - 1;
+        }
+    }
+    ans[1] = r;
+    return ans;
+}
+```
