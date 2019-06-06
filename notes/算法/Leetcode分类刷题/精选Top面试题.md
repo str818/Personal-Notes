@@ -710,3 +710,45 @@ private long ldivide(long ldividend, long ldivisor) {
     return multiple + ldivide(ldividend - sum, ldivisor);
 }
 ```
+
+# 搜索旋转排序数组
+
+[Leetcode - 33 Search in Rotated Sorted Array (Medium)](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+
+题目描述：给定一个旋转的有序数组，例如有序数组  [0,1,2,4,5,6,7] 经一次旋转后可得 [4,5,6,7,0,1,2] ，再给定一个 target 值，返回 target 值在数组中的下标，如果不在返回 -1，假设数组中无重复元素，时间复杂度要求为 O(logn)。
+
+```
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+```
+
+解题思路：题目要求时间复杂度是 O(logn) ，那就告诉我们要用二分搜索了，但是二分搜索是基于有序序列的，但是给出的数组经过一次旋转之后就不再是有序的了，这时就要添加额外的判断条件。
+
+```java
+public int search(int[] nums, int target) {
+    if (nums == null || nums.length == 0) return -1;
+    int lo = 0, hi = nums.length - 1;
+    while (hi > lo) {
+        int mid = (lo + hi) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        }
+        // 一定有一边是有序的
+        if (nums[mid] >= nums[lo]) {
+            // 如果不再有序的那一边，就一定在另外一边
+            if (target >= nums[lo] && target < nums[mid]) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        } else {
+            if (target > nums[mid] && target <= nums[hi]) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+    }
+    return nums[lo] == target ? lo : -1;
+}
+```
