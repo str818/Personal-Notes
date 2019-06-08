@@ -828,6 +828,37 @@ public boolean isValidSudoku(char[][] board) {
 }
 ```
 
+# 缺失的第一个正整数
+
+[Leetcode - 41 First Missing Positive (Hard)](https://leetcode.com/problems/first-missing-positive/)
+
+```
+Input: [3,4,-1,1]
+Output: 2
+```
+
+```java
+public int firstMissingPositive(int[] nums) {
+    int i = 0; 
+    while (i < nums.length) {
+        if (nums[i] >= 1 && nums[i] <= nums.length && nums[i] != nums[nums[i] - 1]) {
+            swap(nums, i, nums[i] - 1);
+        } else {
+            i++;
+        }
+    }
+    i = 0;
+    while (i < nums.length && nums[i] == i + 1) i++;
+    return i + 1;
+}
+
+public void swap (int[] A, int a, int b) {
+    int tmp = A[a];
+    A[a] = A[b];
+    A[b] = tmp;
+}
+```
+
 # 全排列
 
 [Leetcode - 46 Permutations (Medium)](https://leetcode.com/problems/permutations/)
@@ -911,3 +942,4 @@ public void rotate(int[][] matrix) {
     }
 }
 ```
+
