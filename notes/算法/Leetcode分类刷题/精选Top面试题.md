@@ -859,6 +859,42 @@ public void swap (int[] A, int a, int b) {
 }
 ```
 
+# 接雨水
+
+[Leetcode - 42 Trapping Rain Water (Hard)](https://leetcode.com/problems/trapping-rain-water/)
+
+题目描述：给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+
+<div align="center">  <img src="img/leetcode-42.png" width="70%"/> </div><br>
+
+```
+Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+```
+
+解题思路：双指针
+
+```java
+public int trap(int[] height) {
+    int left = 0, right = height.length - 1;
+    int ans = 0;
+    int leftMax = 0, rightMax = 0;
+    while (left < right) {
+        if (height[left] < height[right]) {
+            if (height[left] >= leftMax) leftMax = height[left];
+            else ans += (leftMax - height[left]);
+            left++;
+        } else {
+            if (height[right] >= rightMax) rightMax = height[right];
+            else ans += rightMax - height[right];
+            right--;
+        }
+    }
+    return ans;
+}
+```
+
+
 # 全排列
 
 [Leetcode - 46 Permutations (Medium)](https://leetcode.com/problems/permutations/)
