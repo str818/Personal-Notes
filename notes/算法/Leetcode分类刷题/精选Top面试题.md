@@ -894,6 +894,23 @@ public int trap(int[] height) {
 }
 ```
 
+# 通配符匹配
+
+[Leetcode - 44 Wildcard Matching (Hard)](https://leetcode.com/problems/wildcard-matching/)
+
+题目描述：'?' 可以匹配任何单个字符，'*' 可以匹配任意字符串（包括空字符串）。
+
+```
+Input:
+s = "adceb"
+p = "*a*b"
+Output: true
+Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
+```
+
+```java
+
+```
 
 # 全排列
 
