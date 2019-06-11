@@ -74,9 +74,11 @@ Explanation: The answer is "abc", with the length of 3.
 ```java
 public int lengthOfLongestSubstring(String s) {
     if (s == null || s.length() == 0) return 0;
+    // map 记录上一次字符 c 出现的最近位置
     Map<Character, Integer> map = new HashMap<>();
     int max = 0;
     for (int i = 0, j = 0; i < s.length(); i++) {
+        // 如果出现过字符 c 则将 j 移动到出现该字符最近的位置
         if (map.containsKey(s.charAt(i))) {
             j = Math.max(j, map.get(s.charAt(i)) + 1);
         }
