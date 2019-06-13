@@ -104,3 +104,106 @@ create table students(
 );
 ```
 
+# 查询
+
+```sql
+-- 学生表
+create table student(
+	sno varchar(20) primary key,
+    sname varchar(20) not null,
+    ssex varchar(10) not null,
+    sbirthday datetime,
+    class varchar(20)
+);
+-- 教师表
+create table teacher(
+	tno varchar(20) primary key,
+    tname varchar(20) not null,
+    tsex varchar(10) not null,
+    tbirthday datetime,
+    prof varchar(20) not null,
+    depart varchar(20) not null
+);
+-- 课程表
+create table course(
+	cno varchar(20) primary key,
+	cname varchar(20) not null,
+	tno varchar(20) not null,
+	foreign key(tno) references teacher(tno)
+);
+-- 成绩表
+create table score(
+	sno varchar(20) not null,
+    cno varchar(20) not null,
+    degree decimal,
+    foreign key(sno) references student(sno),
+    foreign key(cno) references course(cno),
+    primary key(sno, cno)
+);
+
+insert into sutdent values('101','str818_1','男','1997-01-08','')
+```
+
+```sql
+-- 1. 查询 student 表的所有记录。
+select * from student;
+
+-- 2. 查询 student 表中的所有记录的 sname、ssex 和 class 列。
+select sname, ssex, class from student;
+
+-- 3. 查询教师所有的单位即不重复的 depart 列。
+-- distinct 排除重复
+select distinct depart from teacher;
+
+-- 4. 查询 score 表中成绩在 60 到 80 之间的所有记录。
+-- 查询区间 between .. and..
+select * from score where degree between 60 and 80;
+-- 运算符比较
+select * from score where degree > 60 and degree < 80;
+
+-- 5. 查询 score 表中成绩为 85、86 或 88 的记录。
+-- 表示或者关系的查询 in
+select * from score where degree in(85, 86, 88);
+
+-- 6. 查询 student 表中 '95031' 班或者性别为 '女' 的同学记录。
+-- or 表示或者
+select * from student where class='95031' or ssex='女';
+
+-- 7. 以 class 降序查询 student 表的所有记录。
+-- 降序 desc
+select * from student order by class desc;
+-- 升序（默认 asc）
+select * from student order by class;
+
+-- 8. 以 cno 升序、degree 降序查询 score 表的所有记录。
+select * from score order by cno asc, degree desc;
+
+-- 9. 查询 '95031' 班的学生人数。
+-- 统计 count
+select count(*) from student where class='95031';
+
+-- 10. 查询 score 表中的最高分的学生学号和课程号。
+select sno, cno from score where degree=(select max(degree) from score);
+
+-- 11. 查询每门课的平均成绩。
+-- group by 分组
+select cno,avg(degree) from score group by cno;
+
+-- 12. 查询 score 表中至少有 2 名学生选修的并以 3 开头的课程的平均分数。
+select cno,avg(degree),count(*) from score group by cno
+having count(cno) >= 2 and cno like '3%';
+
+-- 13. 查询所有学生的 sname、cno 和 degree 列。
+-- 多表查询
+select sname, cno, degree from student,score where student.sno=score.sno;
+
+-- 14. 查询所有学生的 sname、cname 和 degree 列。
+-- 三表联查
+select sname,cname,degree from student,course,socre
+where student.sno=score.sno
+and course.sno=score.cno;
+
+-- 15. 查询 '95031' 班学生每门课的平均分。
+
+```
+
