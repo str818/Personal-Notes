@@ -204,6 +204,8 @@ where student.sno=score.sno
 and course.sno=score.cno;
 
 -- 15. 查询 '95031' 班学生每门课的平均分。
-
+select cno,avg(degree) from score
+where sno in (select sno from student where class='95031')
+group by cno;
 ```
 
