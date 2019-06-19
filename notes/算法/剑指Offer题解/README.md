@@ -292,3 +292,34 @@ public void backtracking(char[] c, boolean[] hasUsed, StringBuilder s) {
     }
 }
 ```
+
+# 39. 数组中出现次数超过一半的数字
+
+[Online Programming Link](https://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163?tpId=13&tqId=11181&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+
+解题思路：将数组中出现次数超过一半的数字与其他数字抵消。
+
+```java
+public int MoreThanHalfNum_Solution(int [] array) {
+    if (array == null || array.length == 0)
+        return 0;
+    int major = array[0];
+    for (int i = 1, cnt = 1; i < array.length; i++) {
+        if (cnt == 0) {
+            major = array[i];
+            cnt = 1;
+        } else {
+            cnt = array[i] == major ? cnt + 1 : cnt - 1;
+        }
+    }
+    
+    int cnt = 0;
+    for (int x : array) {
+        if (x == major)
+            cnt++;
+    }
+    return cnt > array.length / 2 ? major : 0;
+}
+```
