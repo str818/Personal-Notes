@@ -254,3 +254,41 @@ private TreeNode Deserialize() {
     return t;
 }
 ```
+
+# 38. 字符串的排列
+
+[Online Programming Link](https://www.nowcoder.com/practice/fe6b651b66ae47d7acce78ffdd9a96c7?tpId=13&tqId=11180&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串 abc,则打印出由字符 a,b,c 所能排列出来的所有字符串 abc,acb,bac,bca,cab 和 cba。输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。
+
+解题思路：注意可能有重复。
+
+```java
+private ArrayList<String> res = new ArrayList<>();
+public ArrayList<String> Permutation(String str) {
+    if (str.length() == 0) 
+        return res;
+    char[] c = str.toCharArray();
+    Arrays.sort(c);
+    backtracking(c, new boolean[c.length], new StringBuilder());
+    return res;
+}
+
+public void backtracking(char[] c, boolean[] hasUsed, StringBuilder s) {
+    if (s.length() == c.length) {
+        res.add(s.toString());
+        return;
+    }
+    for (int i = 0; i < c.length; i++) {
+        if (hasUsed[i])
+            continue;
+        if (i != 0 && c[i] == c[i - 1] && !hasUsed[i - 1])
+            continue;
+        hasUsed[i] = true;
+        s.append(c[i]);
+        backtracking(c, hasUsed, s);
+        s.deleteCharAt(s.length() - 1);
+        hasUsed[i] = false;
+    }
+}
+```
