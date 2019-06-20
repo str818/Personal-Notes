@@ -461,3 +461,20 @@ public int FindGreatestSumOfSubArray(int[] nums) {
     return max;
 }
 ```
+
+# 43. 从 1 到 n 整数中 1 出现的次数
+
+[Online Programming Link](https://www.nowcoder.com/practice/bd7f978302044eee894445e244c7eee6?tpId=13&tqId=11184&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+解题思路：找规律，从最高位计算到最低位。
+
+```java
+public int NumberOf1Between1AndN_Solution(int n) {
+    int cnt = 0;
+    for (int m = 1; m <= n; m *= 10) {
+        int a = n / m, b = n % m;
+        cnt += (a + 8) / 10 * m + (a % 10 == 1 ? b + 1 : 0);
+    }
+    return cnt;
+}
+```
