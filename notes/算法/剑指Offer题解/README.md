@@ -323,3 +323,68 @@ public int MoreThanHalfNum_Solution(int [] array) {
     return cnt > array.length / 2 ? major : 0;
 }
 ```
+
+# 40. 最小的 K 个数
+
+[Online Programming Link](https://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf?tpId=13&tqId=11182&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+解法一：快速选择。
+
+```java
+public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+    ArrayList<Integer> res = new ArrayList<>();
+    if (k > input.length || k <= 0)
+        return res;
+    findKthSamllest(input, k - 1);
+    for (int i = 0; i < k; i++) {
+        res.add(input[i]);
+    }
+    return res;
+}
+public void findKthSamllest(int[] nums, int k) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int j = partition(nums, l, h);
+        if (j == k)
+            break;
+        if (j > k)
+            h = j - 1;
+        else
+            l = j + 1;
+    }
+}
+private int partition(int[] nums, int l, int h) {
+    int p = nums[l];
+    int i = l, j = h + 1;
+    while (true) {
+        while (i != h && nums[++i] < p);
+        while (j != l && nums[--j] > p);
+        if (i >= j)
+            break;
+        swap(nums, i, j);
+    }
+    swap(nums, l, j);
+    return j;
+}
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+}
+```
+
+解法二：最大堆。
+
+```java
+public ArrayList<Integer> GetLeastNumbers_Solution(int [] nums, int k) {
+    if (k > nums.length || k < 0)
+        return new ArrayList<>();
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
+    for (int num : nums) {
+        maxHeap.add(num);
+        if (maxHeap.size() > k)
+            maxHeap.poll();
+    }
+    return new ArrayList<>(maxHeap);
+}
+```
