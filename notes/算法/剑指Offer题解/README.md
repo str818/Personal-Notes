@@ -439,3 +439,25 @@ public char FirstAppearingOnce() {
     return queue.isEmpty() ? '#' : queue.peek();
 }
 ```
+
+# 42. 连续自数字的最大和
+
+[Online Programming Link](https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&tqId=11183&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：{6, -3, -2, 7, -15, 1, 2, 2}，连续子数组的最大和为 8（从第 0 个开始，到第 3 个为止）。
+
+解题思路：贪心，舍弃负数。
+
+```java
+public int FindGreatestSumOfSubArray(int[] nums) {
+    if (nums == null || nums.length == 0)
+        return 0;
+    int max = Integer.MIN_VALUE;
+    int sum = 0;
+    for (int num : nums) {
+        sum = sum <= 0 ? num : sum + num;
+        max = Math.max(max, sum);
+    }
+    return max;
+}
+```
