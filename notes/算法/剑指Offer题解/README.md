@@ -596,3 +596,45 @@ public int FirstNotRepeatingChar(String str) {
     return -1;
 }
 ```
+
+# 51. 数组中的逆序对
+
+[Online Programming Link](https://www.nowcoder.com/practice/96bd6684e04a44eb80e6a68efc0ec6c5?tpId=13&tqId=11188&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+
+```java
+private long cnt;
+private int[] tmp;
+public int InversePairs(int[] nums) {
+    tmp = new int[nums.length];
+    mergeSort(nums, 0, nums.length - 1);
+    return (int)(cnt % 1000000007);
+}
+
+public void mergeSort(int[] nums, int l, int h) {
+    if (h <= l) return;
+    int m = l + (h - l) / 2;
+    mergeSort(nums, l, m);
+    mergeSort(nums, m + 1, h);
+    merge(nums, l, m, h);
+}
+
+public void merge(int[] nums, int l, int m, int h) {
+    int i = l, j = m + 1, k = l;
+    while (i <= m || j <= h) {
+        if (i > m) {
+            tmp[k++] = nums[j++];
+        } else if (j > h) {
+            tmp[k++] = nums[i++];
+        } else if (nums[i] <= nums[j]) {
+            tmp[k++] = nums[i++];
+        } else {
+            tmp[k++] = nums[j++];
+            cnt += m - i + 1;
+        }
+    }
+    for (k = l; k <= h; k++)
+        nums[k] = tmp[k];
+}
+```
