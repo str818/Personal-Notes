@@ -638,3 +638,20 @@ public void merge(int[] nums, int l, int m, int h) {
         nums[k] = tmp[k];
 }
 ```
+
+# 52. 两个链表的第一个公共结点
+
+[Online Programming Link](https://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46?tpId=13&tqId=11189&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+解题思路：设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
+
+```java
+public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+    ListNode p1 = pHead1, p2 = pHead2;
+    while (p1 != p2) {
+        p1 = p1 == null ? pHead2 : p1.next;
+        p2 = p2 == null ? pHead1 : p2.next;
+    }
+    return p1;
+}
+```
