@@ -655,3 +655,27 @@ public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
     return p1;
 }
 ```
+
+# 53. 数字在排序数组中出现的次数
+
+[Online Programming Link](https://www.nowcoder.com/practice/70610bf967994b22bb1c26f9ae901fa2?tpId=13&tqId=11190&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public int GetNumberOfK(int [] nums , int k) {
+    int first = binarySearch(nums, k);
+    int second = binarySearch(nums, k + 1);
+    return (first == nums.length || nums[first] != k) ? 0 : second - first;
+}
+private int binarySearch(int[] nums, int k) {
+    int l = 0, h = nums.length - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (nums[m] >= k) {
+            h = m - 1;
+        } else {
+            l = m + 1;
+        }
+    }
+    return l;
+}
+```
