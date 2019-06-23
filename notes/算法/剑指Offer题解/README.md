@@ -711,3 +711,26 @@ public int TreeDepth(TreeNode root) {
     return root == null ? 0 : 1 + Math.max(TreeDepth(root.left), TreeDepth(root.right));
 }
 ```
+
+# 55.2 平衡二叉树
+
+[Online Programming Link](https://www.nowcoder.com/practice/8b3b95850edb4115918ecebdf1b4d222?tpId=13&tqId=11192&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：判断是否是平衡二叉树，高度差小于一。
+
+```java
+private boolean isBalance = true;
+public boolean IsBalanced_Solution(TreeNode root) {
+    height(root);
+    return isBalance;
+}
+private int height(TreeNode root) {
+    if (root == null || !isBalance)
+        return 0;
+    int left = height(root.left);
+    int right = height(root.right);
+    if (Math.abs(right - left) > 1)
+        isBalance = false;
+    return 1 + Math.max(left, right);
+}
+```
