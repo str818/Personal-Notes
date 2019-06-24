@@ -896,3 +896,27 @@ private void swap(char[] chars, int i, int j) {
     chars[j] = t;
 }
 ```
+
+# 59 滑动窗口的最大值
+
+[Online Programming Link](https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788?tpId=13&tqId=11217&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。
+
+```java
+public ArrayList<Integer> maxInWindows(int[] num, int size) {
+    ArrayList<Integer> ret = new ArrayList<>();
+    if (size > num.length || size < 1)
+        return ret;
+    PriorityQueue<Integer> heap = new PriorityQueue<>((o1, o2) -> o2 - o1);  /* 大顶堆 */
+    for (int i = 0; i < size; i++)
+        heap.add(num[i]);
+    ret.add(heap.peek());
+    for (int i = 0, j = i + size; j < num.length; i++, j++) {            /* 维护一个大小为 size 的大顶堆 */
+        heap.remove(num[i]);
+        heap.add(num[j]);
+        ret.add(heap.peek());
+    }
+    return ret;
+}
+```
