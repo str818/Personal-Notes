@@ -779,3 +779,36 @@ public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
     return new ArrayList<>();
 }
 ```
+
+# 57.2 和为 S 的连续正数序列
+
+[Online Programming Link](https://www.nowcoder.com/practice/c451a3fd84b64cb19485dad758a55ebe?tpId=13&tqId=11194&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：输出所有和为 S 的连续正数序列。
+
+```java
+public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
+    ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
+    int start = 1, end = 2;
+    int curSum = 3;
+    while (end < sum) {
+        if (curSum > sum) {
+            curSum -= start;
+            start++;
+        } else if (curSum < sum) {
+            end++;
+            curSum += end;
+        } else {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int i = start; i <= end; i++)
+                list.add(i);
+            ret.add(list);
+            curSum -= start;
+            start++;
+            end++;
+            curSum += end;
+        }
+    }
+    return ret;
+}
+```
