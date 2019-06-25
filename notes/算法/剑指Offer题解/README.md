@@ -216,7 +216,7 @@ public void inOrder(TreeNode node) {
     inOrder(node.right);
 }
 ```
- 
+
 # 37. 序列化二叉树
 
 [Online Programming Link](https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84?tpId=13&tqId=11214&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
@@ -897,7 +897,7 @@ private void swap(char[] chars, int i, int j) {
 }
 ```
 
-# 59 滑动窗口的最大值
+# 59. 滑动窗口的最大值
 
 [Online Programming Link](https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788?tpId=13&tqId=11217&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -917,6 +917,39 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
         heap.add(num[j]);
         ret.add(heap.peek());
     }
+    return ret;
+}
+```
+
+# 60. n 个骰子的点数
+
+[Online Programming Link](<https://www.lintcode.com/problem/dices-sum/description>)
+
+题目描述：把 n 个骰子仍在地上，求点数和为 s 的概率。
+
+解题思路：定义 `dp[i][j]` 为前 i 个骰子产生点数 j 的次数。
+
+状态转移方程为：`dp[i][j] = dp(i-1,j-1) + dp(i-1,j-2) + dp(i-1,j-3) + dp(i-1,j-4) + dp(i-1,j-5)+dp(c-1,k-6)`。
+
+```java
+public List<Map.Entry<Integer, Double>> dicesSum(int n) {
+    final int face = 6;
+    final int pointNum = face * n;
+    long[][] dp = new long[n + 1][pointNum + 1];
+
+    for (int i = 1; i <= face; i++)
+        dp[1][i] = 1;
+
+    for (int i = 2; i <= n; i++)
+        for (int j = i; j <= pointNum; j++)     /* 使用 i 个骰子最小点数为 i */
+            for (int k = 1; k <= face && k <= j; k++)
+                dp[i][j] += dp[i - 1][j - k];
+
+    final double totalNum = Math.pow(6, n);
+    List<Map.Entry<Integer, Double>> ret = new ArrayList<>();
+    for (int i = n; i <= pointNum; i++)
+        ret.add(new AbstractMap.SimpleEntry<>(i, dp[n][i] / totalNum));
+
     return ret;
 }
 ```
