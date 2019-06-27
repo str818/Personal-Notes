@@ -1025,6 +1025,8 @@ public int maxProfit(int[] prices) {
 
 # 64. 求 1+2+3+...+n
 
+[Online Programming Link](https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1?tpId=13&tqId=11200&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 题目描述：要求不能使用乘除法、for、while、if、else、switch、case 等关键字及条件判断语句 A ? B : C。
 
 ```java
@@ -1037,6 +1039,8 @@ public int Sum_Solution(int n) {
 
 # 65. 不用加减乘除做加法
 
+[Online Programming Link](https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215?tpId=13&tqId=11201&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 题目描述：写一个函数，求两个整数之和，要求不得使用 +、-、*、/ 四则运算符号。
 
 解题思路：a ^ b 表示没有考虑进位的情况下两数的和，(a & b) << 1 就是进位。
@@ -1046,5 +1050,23 @@ public int Sum_Solution(int n) {
 ```java
 public int Add(int a,int b) {
     return b == 0 ? a : Add(a ^ b, (a & b) << 1);
+}
+```
+
+# 66. 构建乘积数组
+
+[Online Programming Link](https://www.nowcoder.com/practice/94a4d381a68b47b7a8bed86f2975db46?tpId=13&tqId=11204&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定一个数组 A[0, 1,..., n-1]，请构建一个数组 B[0, 1,..., n-1]，其中 B 中的元素 B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。要求不能使用除法。
+
+```java
+public int[] multiply(int[] A) {
+    int n = A.length;
+    int[] B = new int[n];
+    for (int i = 0, product = 1; i < n; product *= A[i], i++)       /* 从左往右累乘 */
+        B[i] = product;
+    for (int i = n - 1, product = 1; i >= 0; product *= A[i], i--)  /* 从右往左累乘 */
+        B[i] *= product;
+    return B;
 }
 ```
