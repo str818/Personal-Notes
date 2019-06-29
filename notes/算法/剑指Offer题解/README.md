@@ -1,4 +1,4 @@
-# 1. 数组中重复的数字 {T}
+# 3. 数组中重复的数字 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -68,7 +68,7 @@ public int countRange(int[] nums, int length, int start, int end){
 }
 ```
 
-# 2. 二维数组中的查找 {T}
+# 4. 二维数组中的查找 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -95,7 +95,7 @@ public boolean Find(int target, int[][] array) {
 }
 ```
 
-# 3. 替换空格 {F}
+# 5. 替换空格 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/4060ac7e3e404ad1a894ef3e17650423?tpId=13&tqId=11155&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -126,7 +126,7 @@ public String replaceSpace(StringBuffer str) {
 }
 ```
 
-# 4. 从尾到头打印链表 {T}
+# 6. 从尾到头打印链表 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -159,7 +159,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-# 5. 重建二叉树 {F}
+# 7. 重建二叉树 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
