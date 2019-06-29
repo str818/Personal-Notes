@@ -213,6 +213,30 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 }
 ```
 
+# 9. 用两个栈实现队列 {T}
+
+[Online Programming Link](https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+Stack<Integer> in = new Stack<Integer>();
+Stack<Integer> out = new Stack<Integer>();
+
+public void push(int node) {
+    in.push(node);
+}
+
+public int pop() throws Exception {
+    if (out.isEmpty())
+        while (!in.isEmpty())
+            out.push(in.pop());
+
+    if (out.isEmpty())
+        throw new Exception("queue is empty");
+
+    return out.pop();
+}
+```
+
 
 
 
