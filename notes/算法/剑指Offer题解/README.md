@@ -383,7 +383,7 @@ private char[][] buildMatrix(char[] array) {
 }
 ```
 
-# 13. 机器人的运动范围
+# 13. 机器人的运动范围 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8?tpId=13&tqId=11219&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -432,6 +432,23 @@ private void initStatus(int rows, int cols) {
             this.digitSum[i][j] = digitSum[i] + digitSum[j];
         }
     }
+}
+```
+
+# 14. 剪绳子 {F}
+
+[Online Programming Link](https://leetcode.com/problems/integer-break/description/)
+
+题目描述：把一根绳子剪成多段，并且使得每段的长度乘积最大。
+
+```java
+public int integerBreak(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++)
+        for (int j = 1; j < i; j++)
+            dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
+    return dp[n];
 }
 ```
 
