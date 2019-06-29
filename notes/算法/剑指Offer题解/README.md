@@ -469,6 +469,30 @@ public int NumberOf1(int n) {
 }
 ```
 
+# 16. 数值的整数次方 {F}
+
+[Online Programming Link](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent，求 base 的 exponent 次方。
+
+```java
+public double Power(double base, int exponent) {
+    if (exponent == 1) return base;
+    if (exponent == 0) return 1;
+    boolean isNegative = false;
+    if (exponent < 0) {
+        isNegative = true;
+        exponent = -exponent;
+    }
+    double pow = Power(base * base, exponent / 2);
+    if (exponent % 2 == 1) {
+        pow *= base;
+    }
+    return isNegative ? 1 / pow : pow;
+}
+```
+
+
 
 
 
