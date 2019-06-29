@@ -383,6 +383,58 @@ private char[][] buildMatrix(char[] array) {
 }
 ```
 
+# 13. 机器人的运动范围
+
+[Online Programming Link](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8?tpId=13&tqId=11219&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+
+```java
+private static final int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+private int[][] digitSum;
+private int count = 0;
+private int rows, cols, threshold;
+public int movingCount(int threshold, int rows, int cols) {
+    this.rows = rows;
+    this.cols = cols;
+    this.threshold = threshold;
+    initStatus(rows, cols);
+    boolean[][] marked = new boolean[rows][cols];
+    dfs(marked, 0, 0);
+    return count;
+}
+
+private void dfs(boolean[][] marked, int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]) return;
+    
+    marked[r][c] = true;
+    if (digitSum[r][c] > threshold) return;
+        count++;
+    for (int[] n : next) {
+        dfs(marked, r + n[0], c + n[1]);
+    }
+}
+
+private void initStatus(int rows, int cols) {
+    int n = Math.max(rows, cols);
+    int[] digitSum = new int[n];
+    for (int i = 0; i < n; i++) {
+        int tmp = i;
+        while (tmp != 0) {
+            digitSum[i] += tmp % 10;
+            tmp /= 10;
+        }
+    }
+    
+    this.digitSum = new int[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            this.digitSum[i][j] = digitSum[i] + digitSum[j];
+        }
+    }
+}
+```
+
 
 # 36. 二叉树与双向链表
 
