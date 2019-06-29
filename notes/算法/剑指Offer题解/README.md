@@ -237,6 +237,23 @@ public int pop() throws Exception {
 }
 ```
 
+# 10. 斐波那契数列 {T}
+
+[Online Programming Link](https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public int Fibonacci(int n) {
+    if (n <= 1) return n;
+    int a = 0, b = 1;
+    for (int i = 2; i <= n; i++) {
+        int tmp = b;
+        b = a + b;
+        a = tmp;
+    }
+    return b;
+}
+```
+
 
 
 
