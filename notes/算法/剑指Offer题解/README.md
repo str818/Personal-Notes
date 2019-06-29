@@ -273,7 +273,7 @@ public int RectCover(int target) {
 }
 ```
 
-# 10.3 跳台阶
+# 10.3 跳台阶 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=13&tqId=11161&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -291,6 +291,26 @@ public int JumpFloor(int target) {
     return b;
 }
 ```
+
+# 10.4 变态跳台阶 {F}
+
+[Online Programming Link](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+```java
+public int JumpFloorII(int target) {
+    int[] dp = new int[target];
+    Arrays.fill(dp, 1);
+    for (int i = 1; i < target; i++) {
+        for (int j = 0; j < i; j++) {
+            dp[i] += dp[j];
+        }
+    }
+    return dp[target - 1];
+}
+```
+
 
 
 # 36. 二叉树与双向链表
