@@ -311,6 +311,26 @@ public int JumpFloorII(int target) {
 }
 ```
 
+# 11. 旋转数组的最小数字 {F}
+
+[Online Programming Link](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
+
+```java
+public int minNumberInRotateArray(int [] array) {
+    int l = 0, r = array.length - 1;
+    while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (array[r] >= array[mid]) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return array[l];
+}
+```
 
 
 # 36. 二叉树与双向链表
