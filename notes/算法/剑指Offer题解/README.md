@@ -1,4 +1,4 @@
-# 1. 数组中重复的数字
+# 1. 数组中重复的数字 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -11,22 +11,24 @@
 数组中的数字都在 0 ~ n-1 的范围内，如果数组中没有重复的数字，那么当数组排序后数字 i 将都会出现在下标为 i 的位置。如果有重复数字，就不出现不止一个数字 i 出现在下标为 i 的位置，利用这一原理可以求解。
 
 ```java
-public boolean duplicate(int[] nums,int length,int []duplication) {
-    
-    if(nums == null || length <= 0) return false;
-    
-    for(int i = 0; i < length; i++){
-        while(nums[i] != i){
-            if(nums[i] == nums[nums[i]]){
-                duplication[0] = nums[i];
-                return true;
-            }
-            int t = nums[i];
-            nums[i] = nums[t];  // 注意不能写成 nums[nums[i]]
-            nums[t] = t;
+public boolean duplicate(int[] nums, int length,int[] duplication) {
+    if (nums == null || length <= 0)
+        return false;
+    for (int i = 0; i < length; i++) {
+        while (nums[i] != i && nums[nums[i]] != nums[i]) {
+            swap(nums, i, nums[i]);
+        }
+        if (nums[i] != i) {
+            duplication[0] = nums[i];
+            return true;
         }
     }
     return false;
+}
+private void swap(int[] nums, int a, int b) {
+    int tmp = nums[a];
+    nums[a] = nums[b];
+    nums[b] = tmp;
 }
 ```
 
@@ -66,7 +68,7 @@ public int countRange(int[] nums, int length, int start, int end){
 }
 ```
 
-# 2. 二维数组中的查找
+# 2. 二维数组中的查找 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -75,24 +77,25 @@ public int countRange(int[] nums, int length, int start, int end){
 解题思路：从右上角开始找。
 
 ```java
-public boolean Find(int target, int[][] matrix) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) 
+public boolean Find(int target, int[][] array) {
+    if (array == null || array.length == 0 || array[0].length == 0)
         return false;
-    int rows = matrix.length, cols = matrix[0].length;
-    int r = 0, c = cols - 1;
-    while (r <= rows - 1 && c >= 0) {
-        if (target == matrix[r][c])
+    int i = 0, j = array[0].length - 1;
+    while (i < array.length && j >= 0) {
+        if (array[i][j] == target) {
             return true;
-        else if (target > matrix[r][c])
-            r++;
-        else
-            c--;
+        }
+        if (array[i][j] > target) {
+            j--;
+        } else {
+            i++;
+        }
     }
     return false;
 }
 ```
 
-# 3. 替换空格
+# 3. 替换空格 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/4060ac7e3e404ad1a894ef3e17650423?tpId=13&tqId=11155&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -123,7 +126,7 @@ public String replaceSpace(StringBuffer str) {
 }
 ```
 
-# 4. 从尾到头打印链表
+# 4. 从尾到头打印链表 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -156,7 +159,7 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 }
 ```
 
-# 5. 重建二叉树
+# 5. 重建二叉树 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -165,25 +168,26 @@ public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
 解题思路：二叉树先序遍历的第一个结点是根节点，找到其在中序遍历里的位置，二分。
 
 ```java
-public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
-    return reConstructBinaryTree(pre,0,in,0,in.length);
+public TreeNode reConstructBinaryTree(int[] pre,int[] in) {
+    return reConstructBinaryTree(pre, 0, in, 0, in.length);
 }
-
-public TreeNode reConstructBinaryTree(int[] pre, int preIndex, int[] in, int start, int end){
-    if(preIndex >= pre.length || start == end) return null;
+private TreeNode reConstructBinaryTree(int[] pre, int preIndex, int[] in, int inL, int inR) {
+    
+    if (preIndex >= pre.length || inL == inR)
+        return null;
     
     TreeNode root = new TreeNode(pre[preIndex]);
-    
-    for(int i = start; i < end; i++){
-        if(pre[preIndex] == in[i]){
-            root.left = reConstructBinaryTree(pre, preIndex + 1, in, start, i);
-            root.right = reConstructBinaryTree(pre, preIndex + i - start + 1, in, i + 1, end);
+    for (int i = inL; i < inR; i++) {
+        if (in[i] == pre[preIndex]) {
+            root.left = reConstructBinaryTree(pre, preIndex + 1, in, inL, i);
+            root.right = reConstructBinaryTree(pre, preIndex + i - inL + 1, in, i + 1, inR);
         }
     }
-    
     return root;
 }
 ```
+
+
 
 
 # 36. 二叉树与双向链表
@@ -1092,5 +1096,37 @@ public int StrToInt(String str) {
         ret = ret * 10 + (c - '0');
     }
     return isNegative ? -ret : ret;
+}
+```
+
+# 68. 树中两个节点的最低公共祖先
+
+## 1. 二叉查找树
+
+[Leetcode : 235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree)
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null)
+        return root;
+    if (root.val > p.val && root.val > q.val)
+        return lowestCommonAncestor(root.left, p, q);
+    if (root.val < p.val && root.val < q.val)
+        return lowestCommonAncestor(root.right, p, q);
+    return root;
+}
+```
+
+## 2. 普通二叉树
+
+[Leetcode : 236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/)
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null || root == p || root == q)
+        return root;
+    TreeNode left = lowestCommonAncestor(root.left, p, q);
+    TreeNode right = lowestCommonAncestor(root.right, p, q);
+    return left == null ? right : right == null ? left : root;
 }
 ```
