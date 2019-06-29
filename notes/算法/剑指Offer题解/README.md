@@ -237,7 +237,7 @@ public int pop() throws Exception {
 }
 ```
 
-# 10. 斐波那契数列 {T}
+# 10.1 斐波那契数列 {T}
 
 [Online Programming Link](https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -254,7 +254,24 @@ public int Fibonacci(int n) {
 }
 ```
 
+# 10.2 矩形覆盖 {T}
 
+[Online Programming Link](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：我们可以用 `2*1` 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 `2*1` 的小矩形无重叠地覆盖一个 `2*n` 的大矩形，总共有多少种方法？
+
+```java
+public int RectCover(int target) {
+    if (target <= 2) return target;
+    int a = 1, b = 2;
+    for (int i = 3; i <= target; i++) {
+        int tmp = b;
+        b += a;
+        a = tmp;
+    }
+    return b;
+}
+```
 
 
 # 36. 二叉树与双向链表
