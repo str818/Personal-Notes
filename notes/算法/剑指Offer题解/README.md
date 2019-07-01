@@ -665,6 +665,28 @@ public ListNode FindKthToTail(ListNode head, int k) {
 }
 ```
 
+# 23. 链表中环的入口结点
+
+[Online Programming Link](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&tqId=11208&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ListNode EntryNodeOfLoop(ListNode pHead) {
+    if (pHead == null || pHead.next == null)
+        return null;
+    ListNode slow = pHead, fast = pHead;
+    do {
+        fast = fast.next.next;
+        slow = slow.next;
+    } while (slow != fast);
+    fast = pHead;
+    while (slow != fast) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    return slow;
+}
+```
+
 # 36. 二叉树与双向链表
 
 [Online Programming Link](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
