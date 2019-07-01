@@ -492,7 +492,7 @@ public double Power(double base, int exponent) {
 }
 ```
 
-# 17. 打印从 1 到最大的 n 位数
+# 17. 打印从 1 到最大的 n 位数 {F}
 
 题目描述：输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数即 999。
 
@@ -525,7 +525,7 @@ private void printNumber(char[] number) {
 }
 ```
 
-# 18.1 在 O(1) 时间内删除链表节点
+# 18.1 在 O(1) 时间内删除链表节点 {F}
 
 解题思路：如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)；否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
 
@@ -553,7 +553,7 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 }
 ```
 
-# 18.2 删除链表中重复的结点
+# 18.2 删除链表中重复的结点 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef?tpId=13&tqId=11209&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -573,7 +573,7 @@ public ListNode deleteDuplication(ListNode pHead) {
 }
 ```
 
-# 19. 正则表达式匹配
+# 19. 正则表达式匹配 {F}
 
 [Online Programming Link](https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&tqId=11205&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
@@ -610,7 +610,18 @@ public boolean match(char[] str, char[] pattern) {
 }
 ```
 
+# 20. 表示数值的字符串
 
+[Online Programming Link](https://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2?tpId=13&tqId=11206&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。 但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
+
+```java
+public boolean isNumeric(char[] str) {
+    if (str == null || str.length == 0) return false;
+    return new String(str).matches("[+-]?\\d*(\\.\\d+)?([eE][+-]?\\d+)?");
+}
+```
 
 # 36. 二叉树与双向链表
 
