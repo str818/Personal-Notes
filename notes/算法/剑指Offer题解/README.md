@@ -687,6 +687,38 @@ public ListNode EntryNodeOfLoop(ListNode pHead) {
 }
 ```
 
+# 24. 反转链表
+
+[Online Programming Link](https://www.nowcoder.com/practice/75e878df47f24fdc9dc3e400ec6058ca?tpId=13&tqId=11168&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+方法一：递归
+
+```java
+public ListNode ReverseList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode next = head.next;
+    head.next = null;
+    ListNode newHead = ReverseList(next);
+    next.next = head;
+    return newHead;
+}
+```
+
+方法二：头插法
+
+```java
+public ListNode ReverseList(ListNode head) {
+    ListNode newList = new ListNode(-1);
+    while (head != null) {
+        ListNode next = head.next;
+        head.next = newList.next;
+        newList.next = head;
+        head = next;
+    }
+    return newList.next;
+}
+```
+
 # 36. 二叉树与双向链表
 
 [Online Programming Link](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
