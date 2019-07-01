@@ -623,6 +623,28 @@ public boolean isNumeric(char[] str) {
 }
 ```
 
+# 21. 调整数组顺序使奇数位于偶数前面
+
+[Online Programming Link](https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&tqId=11166&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：需要保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+```java
+public void reOrderArray(int[] nums) {
+    int oddCount = 0;
+    for (int x : nums) {
+        if (x % 2 == 1) oddCount++;
+    }
+    int[] copy = nums.clone();
+    int i = 0, j = oddCount;
+    for (int x : copy) {
+        if (x % 2 == 1) nums[i++] = x;
+        else nums[j++] = x;
+    }
+}
+```
+
+
 # 36. 二叉树与双向链表
 
 [Online Programming Link](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
