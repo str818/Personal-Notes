@@ -755,6 +755,22 @@ private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2) {
 }
 ```
 
+# 27. 二叉树的镜像
+
+[Online Programming Link](https://www.nowcoder.com/practice/564f4c26aa584921bc75623e48ca3011?tpId=13&tqId=11171&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public void Mirror(TreeNode root) {
+    if (root == null) return;
+    TreeNode tmp = root.left;
+    root.left = root.right;
+    root.right = tmp;
+    Mirror(root.left);
+    Mirror(root.right);
+}
+```
+
+
 # 36. 二叉树与双向链表
 
 [Online Programming Link](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
