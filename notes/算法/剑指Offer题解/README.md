@@ -770,6 +770,28 @@ public void Mirror(TreeNode root) {
 }
 ```
 
+# 28. 对称的二叉树
+
+[Online Programming Link](https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb?tpId=13&tqId=11211&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+
+```java
+public boolean isSymmetrical(TreeNode pRoot) {
+    if (pRoot == null) return true;
+    return isSymmetrical(pRoot.left, pRoot.right);
+}
+private boolean isSymmetrical(TreeNode root1, TreeNode root2) {
+    if (root1 == null && root2 == null)
+        return true;
+    if (root1 == null || root2 == null)
+        return false;
+    if (root1.val != root2.val)
+        return false;
+    return isSymmetrical(root1.left, root2.right) && isSymmetrical(root1.right, root2.left);
+}
+```
+
 
 # 36. 二叉树与双向链表
 
