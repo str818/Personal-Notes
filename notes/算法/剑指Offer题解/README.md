@@ -719,6 +719,24 @@ public ListNode ReverseList(ListNode head) {
 }
 ```
 
+# 25. 合并两个排序的链表
+
+[Online Programming Link](https://www.nowcoder.com/practice/d8b6b4358f774294a89de2a6ac4d9337?tpId=13&tqId=11169&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ListNode Merge(ListNode list1,ListNode list2) {
+    if (list1 == null) return list2;
+    if (list2 == null) return list1;
+    if (list1.val > list2.val) {
+        list2.next = Merge(list1, list2.next);
+        return list2;
+    } else {
+        list1.next = Merge(list1.next, list2);
+        return list1;
+    }
+}
+```
+
 # 36. 二叉树与双向链表
 
 [Online Programming Link](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
