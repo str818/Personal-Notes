@@ -925,6 +925,37 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 }
 ```
 
+# 32.3 按之字形顺序打印二叉树
+
+[Online Programming Link](https://www.nowcoder.com/practice/91b69814117f4e8097390d107d2efbe0?tpId=13&tqId=11212&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+    ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+    boolean reverse = false;
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(pRoot);
+    while (!queue.isEmpty()) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int cnt = queue.size();
+        while (cnt-- > 0) {
+            TreeNode t = queue.poll();
+            if (t == null) continue;
+            list.add(t.val);
+            queue.offer(t.left);
+            queue.offer(t.right);
+        }
+        if (reverse) {
+            Collections.reverse(list);
+        }
+        reverse = !reverse;
+        if (list.size() != 0) res.add(list); 
+    }
+    return res;
+}
+```
+
+
 
 
 # 36. 二叉树与双向链表
