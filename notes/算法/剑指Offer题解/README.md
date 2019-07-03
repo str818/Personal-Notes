@@ -854,7 +854,7 @@ public int min() {
 
 # 31. 栈的压入、弹出序列
 
-[Online Programming Link](https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%89%91%E6%8C%87%20Offer%20%E9%A2%98%E8%A7%A3%20-%2030~39.md#30-%E5%8C%85%E5%90%AB-min-%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88)
+[Online Programming Link](https://www.nowcoder.com/practice/d77d11405cc7470d82554cb392585106?tpId=13&tqId=11174&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 题目描述：输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
 
@@ -873,6 +873,57 @@ public boolean IsPopOrder(int [] pushA,int [] popA) {
 }
 ```
 
+# 32.1 从上往下打印二叉树
+
+[Online Programming Link](https://www.nowcoder.com/practice/7fe2212963db4790b57431d9ed259701?tpId=13&tqId=11175&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：层次遍历。
+
+```java
+public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+    ArrayList<Integer> res = new ArrayList<>();
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+        int cnt = queue.size();
+        for (int i = 0; i < cnt; i++) {
+            TreeNode t = queue.poll();
+            if (t == null) continue;
+            res.add(t.val);
+            queue.offer(t.left);
+            queue.offer(t.right);
+        }
+    }
+    return res;
+}
+```
+
+# 32.2 把二叉树打印成多行
+
+[Online Programming Link](https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288?tpId=13&tqId=11213&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+    ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.add(pRoot);
+    while (!queue.isEmpty()) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int cnt = queue.size();
+        while (cnt-- > 0) {
+            TreeNode node = queue.poll();
+            if (node == null)
+                continue;
+            list.add(node.val);
+            queue.add(node.left);
+            queue.add(node.right);
+        }
+        if (list.size() != 0)
+            ret.add(list);
+    }
+    return ret;
+}
+```
 
 
 
