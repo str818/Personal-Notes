@@ -852,6 +852,28 @@ public int min() {
 }
 ```
 
+# 31. 栈的压入、弹出序列
+
+[Online Programming Link](https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%89%91%E6%8C%87%20Offer%20%E9%A2%98%E8%A7%A3%20-%2030~39.md#30-%E5%8C%85%E5%90%AB-min-%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88)
+
+题目描述：输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。
+
+```java
+public boolean IsPopOrder(int [] pushA,int [] popA) {
+    int n = pushA.length;
+    Stack<Integer> stack = new Stack<>();
+    for (int pushIndex = 0, popIndex = 0; pushIndex < n; pushIndex++) {
+        stack.push(pushA[pushIndex]);
+        while (popIndex < n && !stack.isEmpty() && stack.peek() == popA[popIndex]) {
+            stack.pop();
+            popIndex++;
+        }
+    }
+    return stack.isEmpty();
+}
+```
+
+
 
 
 # 36. 二叉树与双向链表
