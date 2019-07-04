@@ -955,6 +955,33 @@ public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 }
 ```
 
+# 33. 二叉搜索树的后续遍历序列
+
+[Online Programming Link](https://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd?tpId=13&tqId=11176&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
+
+```java
+public boolean VerifySquenceOfBST(int[] sequence) {
+    if (sequence == null || sequence.length == 0)
+        return false;
+    return verify(sequence, 0, sequence.length - 1);
+}
+public boolean verify(int[] nums, int l, int r) {
+    if (r - l <= 1)
+        return true;
+    int root = nums[r];
+    int first = l;
+    while(first < r && nums[first] < root) {
+        first++;
+    }
+    for (int i = first; i < r; i++) {
+        if (nums[i] < root) return false;
+    }
+    return verify(nums, l, first - 1) && verify(nums, first, r - 1);
+}
+```
+
 
 
 
