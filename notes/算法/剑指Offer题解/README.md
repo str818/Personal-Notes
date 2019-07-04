@@ -1011,7 +1011,43 @@ private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
 }
 ```
 
+# 35. 复杂链表的复制
 
+[Online Programming Link](https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&tqId=11178&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。
+
+```java
+public RandomListNode Clone(RandomListNode pHead) {
+    if (pHead == null)
+        return null;
+    // 插入新节点
+    RandomListNode cur = pHead;
+    while (cur != null) {
+        RandomListNode clone = new RandomListNode(cur.label);
+        clone.next = cur.next;
+        cur.next = clone;
+        cur = clone.next;
+    }
+    // 建立 random 链接
+    cur = pHead;
+    while (cur != null) {
+        RandomListNode clone = cur.next;
+        if (cur.random != null)
+            clone.random = cur.random.next;
+        cur = clone.next;
+    }
+    // 拆分
+    cur = pHead;
+    RandomListNode pCloneHead = pHead.next;
+    while (cur.next != null) {
+        RandomListNode next = cur.next;
+        cur.next = next.next;
+        cur = next;
+    }
+    return pCloneHead;
+}
+```
 
 
 # 36. 二叉树与双向链表
