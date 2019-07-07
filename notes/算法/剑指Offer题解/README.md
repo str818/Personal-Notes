@@ -1303,7 +1303,7 @@ public char FirstAppearingOnce() {
 }
 ```
 
-# 42. 连续自数字的最大和
+# 42. 连续子数组的最大和
 
 [Online Programming Link](https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&tqId=11183&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
